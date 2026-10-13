@@ -1,36 +1,36 @@
 console.log("2. Sistema de descuentos para una tienda");
 
-let cliente = "Andrés";
-let producto = "Portátil";
-let cantidad = 2;
-let precioUnitario = 350000;
+let comprador = "Andrés";
+let articulo = "Portátil";
+let unidades = 2;
+let precioArticulo = 350000;
 
-if(cantidad > 0 && precioUnitario > 0){
-    let valorInicial = cantidad * precioUnitario;
-    let porcentaje = 0;
+if(unidades > 0 && precioArticulo > 0){
+    let subtotal = unidades * precioArticulo;
+    let descuentoPct = 0;
 
-    if(valorInicial >= 1000000){
-        porcentaje = 15;
+    if(subtotal >= 1000000){
+        descuentoPct = 15;
     }
-    else if(valorInicial >= 500000){
-        porcentaje = 10;
+    else if(subtotal >= 500000){
+        descuentoPct = 10;
     }
-    else if(valorInicial >= 200000){
-        porcentaje = 5;
+    else if(subtotal >= 200000){
+        descuentoPct = 5;
     }
     else{
-        porcentaje = 0;
+        descuentoPct = 0;
     }
 
-    let valorDescuento = valorInicial * porcentaje / 100;
-    let totalPagar = valorInicial - valorDescuento;
+    let ahorro = subtotal * descuentoPct / 100;
+    let pagoFinal = subtotal - ahorro;
 
-    console.log(`Cliente: ${cliente}`);
-    console.log(`Producto: ${producto}`);
-    console.log(`Valor inicial: $${valorInicial.toFixed(1)}`);
-    console.log(`Descuento aplicado: ${porcentaje}%`);
-    console.log(`Valor descontado: $${valorDescuento.toFixed(1)}`);
-    console.log(`Total a pagar: $${totalPagar.toFixed(1)}`);
+    console.log(`Cliente: ${comprador}`);
+    console.log(`Producto: ${articulo}`);
+    console.log(`Valor inicial: $${subtotal}`);
+    console.log(`Descuento aplicado: ${descuentoPct}%`);
+    console.log(`Valor descontado: $${ahorro}`);
+    console.log(`Total a pagar: $${pagoFinal}`);
 }else{
     console.log("Cantidad o precio inválido t(-_-)t");
 }
