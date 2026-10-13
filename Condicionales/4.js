@@ -1,40 +1,5 @@
 console.log("4. Clasificación de personas según su edad");
 
-// ===== Versión 1 =====
-
-let nombre = "Andrés";
-let edad = 65;
-
-if(Number.isInteger(edad) && edad >= 0){
-    let categoria = "";
-    let precio = 0;
-
-    if(edad <= 11){
-        categoria = "Niño";
-        precio = 5000;
-    }
-    else if(edad <= 17){
-        categoria = "Adolescente";
-        precio = 8000;
-    }
-    else if(edad <= 59){
-        categoria = "Adulto";
-        precio = 15000;
-    }
-    else{
-        categoria = "Adulto mayor";
-        precio = 15000 - (15000 * 20 / 100);
-    }
-
-    console.log(`Nombre: ${nombre}`);
-    console.log(`Categoría: ${categoria}`);
-    console.log(`Precio de la entrada: $${precio}`);
-}else{
-    console.log("Edad inválida t(-_-)t");
-}
-
-// ===== Versión 2 =====
-
 let persona = "Valentina";
 let anios = 14;
 let tarifaAdulto = 15000;

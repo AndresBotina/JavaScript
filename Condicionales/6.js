@@ -1,56 +1,5 @@
 console.log("6. Sistema de reservas para un hotel");
 
-// ===== Versión 1 =====
-
-let huesped = "Andrés";
-let tipoHabitacion = "Familiar";
-let noches = 7;
-let precioNoche = 0;
-
-switch(tipoHabitacion){
-    case "Sencilla":
-        precioNoche = 100000;
-        break;
-    case "Doble":
-        precioNoche = 160000;
-        break;
-    case "Familiar":
-        precioNoche = 250000;
-        break;
-    default:
-        precioNoche = 0;
-}
-
-if(precioNoche > 0 && noches > 0){
-    let costoInicial = precioNoche * noches;
-    let porcentaje = 0;
-
-    if(tipoHabitacion == "Familiar" && noches >= 7){
-        porcentaje = 15;
-    }
-    else if(noches >= 5){
-        porcentaje = 10;
-    }
-    else{
-        porcentaje = 0;
-    }
-
-    let valorDescontado = costoInicial * porcentaje / 100;
-    let costoFinal = costoInicial - valorDescontado;
-
-    console.log(`Huésped: ${huesped}`);
-    console.log(`Habitación: ${tipoHabitacion}`);
-    console.log(`Noches: ${noches}`);
-    console.log(`Costo inicial: $${costoInicial}`);
-    console.log(`Descuento: ${porcentaje}%`);
-    console.log(`Valor descontado: $${valorDescontado}`);
-    console.log(`Costo final: $${costoFinal}`);
-}else{
-    console.log("Habitación o noches inválidas t(-_-)t");
-}
-
-// ===== Versión 2 =====
-
 let cliente = "Sofía";
 let habitacion = "Doble";
 let estadia = 5;
