@@ -1,6 +1,6 @@
 console.log("3. Cálculo del salario semanal de un empleado");
 
-let trabajador = "Camila";
+let trabajador = "Andrés";
 let horasSemana = 38;
 let pagoPorHora = 12000;
 let jornadaMaxima = 40;

@@ -1,6 +1,6 @@
 console.log("4. Clasificación de personas según su edad");
 
-let persona = "Valentina";
+let persona = "Andrés";
 let anios = 14;
 let tarifaAdulto = 15000;
 

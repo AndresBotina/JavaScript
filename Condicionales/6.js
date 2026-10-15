@@ -1,6 +1,6 @@
 console.log("6. Sistema de reservas para un hotel");
 
-let cliente = "Sofía";
+let cliente = "Andrés";
 let habitacion = "Doble";
 let estadia = 5;
 let tarifa;
