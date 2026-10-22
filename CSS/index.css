@@ -1,0 +1,14 @@
+*{
+    text-align: center;
+}
+
+h1{
+    background-color: blueviolet;
+    display: flex;
+    display: inline;
+    
+    border-radius: 5px;
+}
+h2{
+    background-color: aquamarine;
+}

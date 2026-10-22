@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 5: Presupuesto de un evento</title>
+
+  <!--
+    REQUISITO: vincula aquí tu propio archivo CSS.
+    Ejemplo: <link rel="stylesheet" href="estilos.css">
+  -->
+  <link rel="stylesheet" href="CSS/otra.css">
+</head>
+<body>
+
+  <a href="index.html">&larr; Volver al inicio</a>
+
+  <h1>Ejercicio 5: Presupuesto de un evento</h1>
+
+  <h2>Descripción del ejercicio</h2>
+  <p>
+    Se pide calcular el presupuesto total de un evento (por ejemplo una
+    fiesta) a partir del número de invitados, el costo de comida por
+    invitado, el costo de bebida por invitado, el costo fijo de decoración,
+    el costo fijo de música/animación y el porcentaje de propina para el
+    personal de servicio. A diferencia de los ejercicios anteriores, aquí
+    el resultado no se muestra en un solo input: se debe calcular varios
+    valores intermedios y mostrar el detalle completo en una
+    <strong>tabla</strong>.
+  </p>
+
+  <!--
+    Instrucciones:
+    1. Los inputs no tienen id ni name: accede a ellos desde tu JS
+       recorriendo el DOM del formulario.
+    2. Agrega el atributo onclick al botón "Calcular presupuesto",
+       apuntando a una función de tu JS.
+    3. En tu JS debes calcular, usando variables, al menos:
+       - comida total = invitados * costo de comida por invitado
+       - bebida total = invitados * costo de bebida por invitado
+       - subtotal = comida total + bebida total + decoración + música
+       - propina = subtotal * (porcentaje de propina / 100)
+       - total general = subtotal + propina
+       - costo por invitado = total general / invitados
+    4. Las celdas de la columna "Valor" de la tabla tampoco tienen id ni
+       name: accede a ellas recorriendo las filas de la tabla
+       (querySelectorAll('tbody tr'), children, etc.) y escribe ahí cada
+       resultado.
+    5. Valida qué pasa si el número de invitados es 0 o está vacío.
+    6. Todos los valores de la tabla son dinero: antes de escribirlos en la
+       celda, fórmatealos con toLocaleString() (por ejemplo:
+       totalGeneral.toLocaleString('es-CO')).
+    7. Crea y vincula tu propio CSS y tu propio JS.
+  -->
+
+  <form>
+    <p>
+      <label>Número de invitados: <input type="number" placeholder="Número de invitados" id="nro_invitados"></label>
+    </p>
+    <p>
+      <label>Costo de comida por invitado: <input type="number" placeholder="Costo de comida por invitado" id="costo_comida"></label>
+    </p>
+    <p>
+      <label>Costo de bebida por invitado: <input type="number" placeholder="Costo de bebida por invitado" id="costo_bebida"></label>
+    </p>
+    <p>
+      <label>Costo de decoración: <input type="number" placeholder="Costo de decoración" id="costo_decoracion"></label>
+    </p>
+    <p>
+      <label>Costo de música/animación: <input type="number" placeholder="Costo de música/animación" id="costo_musica"></label>
+    </p>
+    <p>
+      <label>Propina para el personal (%): <input type="number" placeholder="Propina para el personal (%)" id="propina"></label>
+    </p>
+
+    <p>
+      <button type="button" onclick="calcular()">Calcular presupuesto</button>
+    </p>
+  </form>
+
+  <h2>Detalle del presupuesto</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Concepto</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Comida total</td>
+        <td id="total_comida"></td>
+      </tr>
+      <tr>
+        <td>Bebida total</td>
+        <td id="total_bebida"></td>
+      </tr>
+      <tr>
+        <td>Decoración</td>
+        <td id="total_decoracion"></td>
+      </tr>
+      <tr>
+        <td>Música/animación</td>
+        <td id="total_musica"></td>
+      </tr>
+      <tr>
+        <td>Subtotal</td>
+        <td id="total_subtotal"></td>
+      </tr>
+      <tr>
+        <td>Propina</td>
+        <td id="total_propina"></td>
+      </tr>
+      <tr>
+        <td>Total general</td>
+        <td id="total_general"></td>
+      </tr>
+      <tr>
+        <td>Costo por invitado</td>
+        <td id="total_costo_invitados"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!--
+    REQUISITO: vincula aquí tu propio archivo JS.
+    Ejemplo: <script src="otra.js"></script>
+  -->
+    <script src="JS/otra.js"></script>
+</body>
+</html>
