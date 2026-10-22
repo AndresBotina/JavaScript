@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 4: Salario de empleado</title>
+
+  <!--
+    REQUISITO: vincula aquí tu propio archivo CSS.
+    Ejemplo: <link rel="stylesheet" href="estilos.css">
+  -->
+    <link rel="stylesheet" href="CSS/salario.css">
+</head>
+<body>
+
+  <a href="index.html">&larr; Volver al inicio</a>
+
+  <h1>Ejercicio 4: Calcular el salario de un empleado</h1>
+
+  <h2>Descripción del ejercicio</h2>
+  <p>
+    Se pide calcular el salario de un empleado a partir de las horas
+    trabajadas y el valor de la hora, mostrando el resultado en el input
+    de resultado.
+  </p>
+
+  <!--
+    Instrucciones:
+    1. Los inputs no tienen id ni name: accede a ellos desde tu JS recorriendo
+       el DOM del formulario.
+    2. Agrega el atributo onclick al botón "Calcular salario", apuntando a
+       una función de tu JS.
+    3. Opcional: agrega una regla propia, por ejemplo recargo por horas extra
+       si se trabajan más de 8 horas al día.
+    4. El salario a pagar es un valor en dinero: antes de mostrarlo,
+       fórmatealo con toLocaleString() (por ejemplo:
+       salario.toLocaleString('es-CO')).
+    5. Crea y vincula tu propio CSS y tu propio JS.
+  -->
+
+  <form>
+    <p>
+      <label>Horas trabajadas: <input type="number" placeholder="Horas trabajadas" id="horas_trabajadas"></label>
+    </p>
+    <p>
+      <label>Valor por hora: <input type="number" placeholder="Valor por hora" id="valor_hora"></label>
+    </p>
+
+    <p>
+      <button type="button" onclick="calcular()">Calcular salario</button>
+    </p>
+
+    <p>
+      <label>Salario a pagar: <input type="text" placeholder="Salario a pagar" readonly id="salario_a_pagar"></label>
+    </p>
+  </form>
+
+  <!--
+    REQUISITO: vincula aquí tu propio archivo JS.
+    Ejemplo: <script src="salario.js"></script>
+  -->
+    <script src="JS/salario.js"></script>
+</body>
+</html>
