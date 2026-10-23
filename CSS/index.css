@@ -1,55 +1,122 @@
 *{
     text-align: center;
-    
+    font-family: Arial, sans-serif;
 }
+
+body{
+    background-color: white;
+    color: #333333;
+    padding: 20px;
+}
+
 .menu{
     text-decoration: none;
+    color: #333333;
+    font-weight: bold;
+}
+
+.menu:hover{
+    color: #e8c65a;
 }
 
 h1{
-    background-color: blueviolet;
-    border-radius: 5px;
+    background-color: #333333;
+    color: #fbe38e;
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-    height: 40px;
+    padding: 10px 20px;
 }
 
 h2{
-    background-color: aquamarine;
+    background-color: #fbe38e;
+    color: #333333;
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
+    padding: 5px 15px;
 }
+
+p{
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 ul{
     list-style: none;
- }
- li{
+    padding: 0;
+}
+
+li{
     margin-bottom: 15px;
- }
+}
+
+form{
+    background-color: #fffbea;
+    border: 2px solid #333333;
+    border-radius: 15px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 40px;
+}
+
 .botones{
     display: flex;
     justify-content: center;
     gap: 30px;
 }
- button{
+
+button{
     padding: 10px;
     border-radius: 15px;
- }
+    border: 2px solid #333333;
+    background-color: #fbe38e;
+    color: #333333;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #333333;
+    color: #fbe38e;
+}
 
 .volver{
-    
     text-decoration: none;
     list-style: none;
     border: 1px solid;
     border-radius: 10px;
     padding: 10px;
-    background-color: black;
-    color:white ;
+    background-color: #333333;
+    color: white;
 }
+
+.volver:hover{
+    color: #fbe38e;
+}
+
 input{
-    padding:5px;
+    padding: 5px;
     border-radius: 15px;
+    border: 1px solid #333333;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+}
+
+th{
+    background-color: #333333;
+    color: #fbe38e;
+    padding: 10px;
+}
+
+td{
+    padding: 8px 20px;
 }
