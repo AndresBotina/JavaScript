@@ -3,12 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taller 2</title>
+    <title>Taller 2: Clasificar una nota</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <a href="../index.html">← Volver</a>
-    <h1>Taller 2</h1>
+    <header>
+        <a href="../index.html">&larr; Volver al inicio</a>
+        <h1>Clasificar una Nota</h1>
+        <p>Desarrolla un programa que permita ingresar una nota de 0.0 a 5.0 y mostrar el desempeño correspondiente, indicando si aprueba.</p>
+    </header>
+
+    <main>
+        <form id="formTaller2" novalidate>
+            <label for="numero">Ingrese la nota:</label>
+            <input type="number" id="nota" step="any">
+
+            <div class="botones">
+                <input type="submit" value="Verificar">
+                <input type="reset" value="Limpiar">
+            </div>
+        </form>
+
+        <!-- Aquí se mostrarán los mensajes de error y el resultado -->
+        <p id="resultado" class="mensaje"></p>
+    </main>
 
     <script src="../js/taller2.js"></script>
 </body>
