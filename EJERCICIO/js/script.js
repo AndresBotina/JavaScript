@@ -64,12 +64,15 @@ function quiz(event){
     }
     let valor_paso3 = valor_paso2 - valor_redimido;
 
-    let total = valor_paso3;
+    let iva = valor_paso3 * 0.19;
+    let total = valor_paso3 + iva;
 
     resultado.innerText = `Cliente: ${nombre_cliente}\n` +
+        `Valor bruto: $${valor_bruto}\n` +
         `Valor con descuento por tipo de cliente: $${valor_paso1}\n` +
         `Valor ajustado por método de pago: $${valor_paso2}\n` +
         `Puntos redimidos: $${valor_redimido}\n` +
-        `Total: $${total}`;
-
+        `Subtotal antes de IVA: $${valor_paso3}\n` +
+        `IVA (19%): $${iva}\n` +
+        `Total a pagar: $${total}`;
 }
