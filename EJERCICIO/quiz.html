@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <form action="" id="formulario" novalidate>
+        <label for="nombre_cliente">Nombre del cliente:</label>
+        <input type="text" id="nombre_cliente">
+        <br>
+        <label for="valor_bruto">Valor bruto de la compra:</label>
+        <input type="text" id="valor_bruto">
+        <br>
+        <label for="tipo_cliente">Tipo de cliente: Nuevo, frecuente, premiun</label>
+        <input type="text" id="tipo_cliente">
+        <br>
+        <label for="metodo_pago">Método de pago: Efecivo, Tarjeta, Transferencia</label>
+        <input type="text" id="metodo_pago">
+        <br>
+        <label for="fidelizacion">Puntos de fidelizacion acumulados</label>
+        <input type="text" id="fidelizacion">
+ 
+        <br>
+
+        <div class="boton" value=" "verificar>
+            <input type="submit" value="Aceptar">
+            <br>
+            <input type="reset" value="Cancelar">
+        </div>
+   </form>
+
+   <p id="resultado" class="mensaje"></p>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
