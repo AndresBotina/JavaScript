@@ -1,7 +1,7 @@
 let formulario  = document.getElementById("formTaller2");
 
-formulario.addEventListener("submit", taller2);
-function taller2(){
+formulario.addEventListener("submit", clasificarNota);
+function clasificarNota(event){
     let nota = parseFloat(document.getElementById("nota").value);
 
     event.preventDefault();
@@ -25,11 +25,11 @@ function taller2(){
         let desempeño;
         let resultado = "Aprobado";
 
-        if(nota>4.5){
+        if(nota>=4.5){
             desempeño = "Excelente";
-        }else if(nota>4.0){
+        }else if(nota>=4.0){
             desempeño = "Bueno";
-        }else if (nota>3){
+        }else if (nota>=3){
             desempeño = "Aceptable";
         }else{
             desempeño = "Insuficiente";
