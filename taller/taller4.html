@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller 4: Formulario de registro</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html">&larr; Volver al inicio</a>
+        <h1>Formulario de registro</h1>
+        <p>Desarrolla un formulario de registro que valide nombre, edad, correo y contraseña.</p>
+    </header>
+
+    <main>
+        <form id="formTaller4" novalidate>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre">
+
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" step="any">
+
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo">
+
+            <label for="clave">Contraseña:</label>
+            <input type="password" id="clave">
+
+            <label for="confirmar">Confirmar contraseña:</label>
+            <input type="password" id="confirmar">
+
+            <div class="botones">
+                <input type="submit" value="Registrar">
+                <input type="reset" value="Limpiar">
+            </div>
+        </form>
+
+        <!-- Aquí se mostrarán los mensajes de error y el resultado -->
+        <p id="resultado" class="mensaje"></p>
+    </main>
+
+    <script src="../js/taller4.js"></script>
+</body>
+</html>

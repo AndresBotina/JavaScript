@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller 1: Par o impar</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html">&larr; Volver al inicio</a>
+        <h1>Taller 1: Par o impar</h1>
+        <p>Escribe un número entero y descubre si es par o impar.</p>
+    </header>
+
+    <main>
+        <form id="formTaller1" novalidate>
+            <label for="numero">Número entero:</label>
+            <input type="number" id="numero" step="any">
+
+            <div class="botones">
+                <input type="submit" value="Verificar">
+                <input type="reset" value="Limpiar">
+            </div>
+        </form>
+
+        <!-- Aquí se mostrarán los mensajes de error y el resultado -->
+        <p id="resultado" class="mensaje"></p>
+    </main>
+
+    <script src="../js/taller1.js"></script>
+</body>
+</html>

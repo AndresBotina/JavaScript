@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller 3: El mayor de tres numeros</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <a href="../index.html">&larr; Volver al inicio</a>
+        <h1>El mayor de tres numeros</h1>
+        <p>Desarrolla un programa que permita ingresar tres números y mostrar cuál es el mayor, o avisar si los tres son iguales.</p>
+    </header>
+
+    <main>
+        <form id="formTaller3" novalidate>
+            <label for="numero1 ">Ingrese los numeros:</label>
+            <input type="number" id="numero1" step="any">
+            <label for="numero2">Ingrese los numeros:</label>
+            <input type="number" id="numero2" step="any">
+            <label for="numero">Ingrese los numeros:</label>
+            <input type="number" id="numero3" step="any">
+
+            <div class="botones">
+                <input type="submit" value="Verificar">
+                <input type="reset" value="Limpiar">
+            </div>
+        </form>
+
+        <!-- Aquí se mostrarán los mensajes de error y el resultado -->
+        <p id="resultado" class="mensaje"></p>
+    </main>
+
+    <script src="../js/taller3.js"></script>
+</body>
+</html>
