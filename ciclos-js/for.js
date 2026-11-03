@@ -28,3 +28,4 @@ for(let k = 1; k <= 10; k++){
     suma += k;
 }
 console.log(suma)
+h
