@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 8 · Juego de adivinar el número</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 8: Juego de adivinar el número</h1>
+    <p id="etiquetas">Ciclo while · Condiciones · Contadores</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Desarrollar un juego en el que el programa tenga almacenado un número secreto entre 1 y 100. El usuario debe adivinarlo en un máximo de siete intentos.</p>
+      <ul>
+        <li>Solicitar un número en cada intento.</li>
+        <li>Validar que esté entre 1 y 100.</li>
+        <li>Indicar si el número secreto es mayor o menor que el número ingresado.</li>
+        <li>Contar los intentos realizados.</li>
+        <li>Finalizar cuando el usuario adivine o se quede sin intentos.</li>
+        <li>Mostrar un mensaje de victoria o derrota y revelar el número secreto si no lo adivina.</li>
+      </ul>
+      <p><strong>Reto adicional:</strong> otorgar una puntuación inicial de 100 puntos y restar 10 puntos por cada intento incorrecto.</p>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="intentosEntrada">Números para intentar, separados por comas (máximo 7 intentos válidos):</label>
+        <textarea id="intentosEntrada" rows="3" required></textarea>
+        <button type="submit">Jugar</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <ul id="registro"></ul>
+      <p>Intentos realizados: <strong id="intentos">—</strong></p>
+      <p>Puntuación: <strong id="puntos">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio8.js"></script>
+</body>
+</html>

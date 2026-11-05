@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 1 · Sistema de compras en una tienda</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 1: Sistema de compras en una tienda</h1>
+    <p id="etiquetas">Ciclo while · Acumuladores · Condicionales</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Una tienda necesita calcular el valor total de las compras de un cliente. Ingresa los precios separados por comas y termina la lista con 0.</p>
+      <ul>
+        <li>Solicitar el precio de cada producto.</li>
+        <li>Validar que el precio no sea negativo.</li>
+        <li>Acumular el valor de los productos válidos.</li>
+        <li>Contar cuántos productos se registraron.</li>
+        <li>Si la compra supera los $200.000, aplicar un descuento del 10 %.</li>
+        <li>Al finalizar, mostrar el subtotal, el descuento, el total a pagar y la cantidad de productos.</li>
+      </ul>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="precios">Precios separados por comas; termina con 0:</label>
+        <textarea id="precios" rows="3" placeholder="50000, 120000, 0" required></textarea>
+        <button type="submit">Registrar compra</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <p>Cantidad de productos: <strong id="cantidad">—</strong></p>
+      <p>Subtotal: <strong id="subtotal">—</strong></p>
+      <p>Descuento: <strong id="descuento">—</strong></p>
+      <p>Total a pagar: <strong id="total">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio1.js"></script>
+</body>
+</html>

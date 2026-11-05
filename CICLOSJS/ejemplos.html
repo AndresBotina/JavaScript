@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplos de ciclos</title>
+</head>
+<body>
+  <h1>Ejemplos de ciclos</h1>
+
+  <form id="formTabla">
+    <label for="numeroTabla">Número para la tabla:</label>
+    <input type="number" id="numeroTabla" step="1" required>
+    <button type="submit">Generar tabla</button>
+  </form>
+  <ul id="listaTabla"></ul>
+
+  <form id="formAhorro">
+    <label for="ahorroMensual">Ahorro mensual:</label>
+    <input type="number" id="ahorroMensual" step="any" required>
+    <label for="meta">Meta de ahorro:</label>
+    <input type="number" id="meta" step="any" required>
+    <button type="submit">Calcular meses</button>
+  </form>
+  <p id="resultadoAhorro"></p>
+
+  <form id="formDado">
+    <label for="objetivo">Numero del dado que buscas (1 a 6):</label>
+    <input type="number" id="objetivo" min="1" max="6" required>
+    <button type="submit">Lanzar dado</button>
+  </form>
+  <p id="resultadoDado"></p>
+  <ul id="listaDado"></ul>
+
+  <script src="js/ejemplo-for.js"></script>
+  <script src="js/ejemplo-while.js"></script>
+  <script src="js/ejemplo-do-while.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reto final · Cajero automático</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Reto final: Cajero automático</h1>
+    <p id="etiquetas">Validaciones · Variables · Condicionales · Ciclos anidados</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Simular un cajero automático que permita consultar, depositar y retirar dinero durante una sesión.</p>
+      <ul>
+        <li>Ingresar el nombre del titular y el saldo inicial en el formulario.</li>
+        <li>Registrar operaciones en orden con <code>do...while</code>: 1. Consultar saldo · 2. Depositar · 3. Retirar · 4. Salir.</li>
+        <li>Si la opción no existe, avisar y volver a mostrar el menú.</li>
+        <li>Depositar: el valor debe ser mayor que 0 y como máximo $2.000.000 por depósito.</li>
+        <li>Retirar: el valor debe ser mayor que 0, múltiplo de $10.000 y no superar el saldo. Máximo 3 retiros exitosos por sesión.</li>
+        <li>Registrar cada operación (exitosa o rechazada) como un elemento de la lista del historial.</li>
+        <li>Al salir, mostrar: titular, saldo final, total depositado, total retirado y cantidad de operaciones exitosas.</li>
+      </ul>
+      <p><strong>Restricción:</strong> no uses arreglos; el historial se construye directamente en el DOM.</p>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="titularEntrada">Nombre del titular:</label>
+        <input type="text" id="titularEntrada" required>
+        <label for="saldoEntrada">Saldo inicial:</label>
+        <input type="number" id="saldoEntrada" min="0" step="any" required>
+        <label for="operacionesEntrada">Operaciones separadas por punto y coma. Usa 1 para consultar, 2:monto para depositar, 3:monto para retirar y 4 para salir.</label>
+        <textarea id="operacionesEntrada" rows="4" required></textarea>
+        <button type="submit">Iniciar sesión en el cajero</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <ul id="historial"></ul>
+      <p>Titular: <strong id="titular">—</strong></p>
+      <p>Saldo final: <strong id="saldoFinal">—</strong></p>
+      <p>Total depositado: <strong id="totalDepositado">—</strong></p>
+      <p>Total retirado: <strong id="totalRetirado">—</strong></p>
+      <p>Operaciones exitosas: <strong id="operaciones">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/reto.js"></script>
+</body>
+</html>

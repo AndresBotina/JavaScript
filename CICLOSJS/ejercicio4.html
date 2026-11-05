@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 4 · Análisis de números ingresados</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 4: Análisis de números ingresados</h1>
+    <p id="etiquetas">Ciclo do...while · Módulo % · Contadores</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Ingresa números enteros positivos separados por comas y termina la lista con -1.</p>
+      <ul>
+        <li>Identificar cuáles números son pares y cuáles son impares.</li>
+        <li>Contar cuántos números son múltiplos de 3.</li>
+        <li>Sumar por separado los números pares y los impares.</li>
+        <li>Encontrar el mayor número ingresado.</li>
+        <li>Al finalizar, mostrar las estadísticas calculadas, sin incluir el -1 en los resultados.</li>
+      </ul>
+      <p><strong>Ten en cuenta:</strong> debes controlar qué ocurre si el usuario termina el programa sin registrar ningún número válido.</p>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="numerosEntrada">Números enteros separados por comas; termina con -1:</label>
+        <textarea id="numerosEntrada" rows="3" placeholder="6, 9, 4, -1" required></textarea>
+        <button type="submit">Ingresar números</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <p>Cantidad de pares: <strong id="pares">—</strong></p>
+      <p>Suma de pares: <strong id="sumaPares">—</strong></p>
+      <p>Cantidad de impares: <strong id="impares">—</strong></p>
+      <p>Suma de impares: <strong id="sumaImpares">—</strong></p>
+      <p>Múltiplos de 3: <strong id="multiplos3">—</strong></p>
+      <p>Número mayor: <strong id="mayor">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio4.js"></script>
+</body>
+</html>

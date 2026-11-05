@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 2 · Registro de notas de un estudiante</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 2: Registro de notas de un estudiante</h1>
+    <p id="etiquetas">Ciclo for · Promedios · Condiciones</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Una institución educativa necesita calcular el rendimiento de un estudiante a partir de cinco calificaciones.</p>
+      <ul>
+        <li>Solicitar cinco notas entre 0 y 5.</li>
+        <li>Validar que cada nota esté dentro del rango permitido.</li>
+        <li>Calcular el promedio de las notas válidas.</li>
+        <li>Contar cuántas notas son iguales o superiores a 3.</li>
+        <li>Identificar la nota más alta y la más baja.</li>
+        <li>Mostrar el promedio y determinar si el estudiante aprobó (promedio mayor o igual a 3) o reprobó.</li>
+      </ul>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="nota1">Nota 1:</label>
+        <input type="number" id="nota1" step="any" required>
+        <label for="nota2">Nota 2:</label>
+        <input type="number" id="nota2" step="any" required>
+        <label for="nota3">Nota 3:</label>
+        <input type="number" id="nota3" step="any" required>
+        <label for="nota4">Nota 4:</label>
+        <input type="number" id="nota4" step="any" required>
+        <label for="nota5">Nota 5:</label>
+        <input type="number" id="nota5" step="any" required>
+        <button type="submit">Ingresar notas</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <ul id="listaNotas"></ul>
+      <p>Promedio: <strong id="promedio">—</strong></p>
+      <p>Notas iguales o superiores a 3: <strong id="notasAltas">—</strong></p>
+      <p>Nota más alta: <strong id="notaMayor">—</strong></p>
+      <p>Nota más baja: <strong id="notaMenor">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio2.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 5 · Sistema de inicio de sesión</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 5: Sistema de inicio de sesión</h1>
+    <p id="etiquetas">Ciclo while · Contadores · Condiciones compuestas</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Simular un sistema de inicio de sesión que permita al usuario ingresar una contraseña. La contraseña correcta estará almacenada en una variable.</p>
+      <ul>
+        <li>Permitir un máximo de tres intentos.</li>
+        <li>Mostrar un mensaje diferente cuando la contraseña sea correcta o incorrecta.</li>
+        <li>Contar los intentos realizados.</li>
+        <li>Bloquear el acceso cuando se agoten los intentos.</li>
+        <li>Si el usuario inicia sesión correctamente, mostrar un mensaje de bienvenida y finalizar los intentos.</li>
+        <li>Informar cuántos intentos utilizó para ingresar.</li>
+      </ul>
+      <p><strong>Restricción:</strong> no uses arreglos. Ingresa hasta tres contraseñas en los campos del formulario y trabaja con variables, condiciones y ciclos.</p>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="contrasena1">Intento 1:</label>
+        <input type="password" id="contrasena1" required>
+        <label for="contrasena2">Intento 2:</label>
+        <input type="password" id="contrasena2">
+        <label for="contrasena3">Intento 3:</label>
+        <input type="password" id="contrasena3">
+        <button type="submit">Iniciar sesión</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <ul id="registro"></ul>
+      <p>Intentos utilizados: <strong id="intentos">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio5.js"></script>
+</body>
+</html>

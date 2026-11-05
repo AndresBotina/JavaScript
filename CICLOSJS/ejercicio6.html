@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 6 · Estadísticas de ventas de un negocio</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 6: Estadísticas de ventas de un negocio</h1>
+    <p id="etiquetas">Ciclo for · Acumuladores · Condiciones anidadas</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Un negocio desea analizar las ventas realizadas durante siete días consecutivos.</p>
+      <ul>
+        <li>Solicitar el valor de las ventas de cada día.</li>
+        <li>Validar que los valores no sean negativos.</li>
+        <li>Calcular el total vendido y el promedio diario.</li>
+        <li>Identificar el día con mayores ventas.</li>
+        <li>Contar cuántos días las ventas superaron los $300.000.</li>
+        <li>Mostrar un mensaje de rendimiento: excelente si el promedio diario supera los $400.000, aceptable si es igual o superior a $200.000, y bajo si es menor.</li>
+      </ul>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="venta1">Venta del día 1:</label>
+        <input type="number" id="venta1" step="any" required>
+        <label for="venta2">Venta del día 2:</label>
+        <input type="number" id="venta2" step="any" required>
+        <label for="venta3">Venta del día 3:</label>
+        <input type="number" id="venta3" step="any" required>
+        <label for="venta4">Venta del día 4:</label>
+        <input type="number" id="venta4" step="any" required>
+        <label for="venta5">Venta del día 5:</label>
+        <input type="number" id="venta5" step="any" required>
+        <label for="venta6">Venta del día 6:</label>
+        <input type="number" id="venta6" step="any" required>
+        <label for="venta7">Venta del día 7:</label>
+        <input type="number" id="venta7" step="any" required>
+        <button type="submit">Registrar ventas</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <ul id="detalleDias"></ul>
+      <p>Total vendido: <strong id="totalVendido">—</strong></p>
+      <p>Promedio diario: <strong id="promedio">—</strong></p>
+      <p>Día con mayores ventas: <strong id="mejorDia">—</strong></p>
+      <p>Días con ventas mayores a $300.000: <strong id="diasAltos">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio6.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 7 · Nómina de empleados</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 7: Nómina de empleados</h1>
+    <p id="etiquetas">Ciclos anidados · Condiciones · Acumuladores</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Una empresa necesita calcular el pago semanal de varios empleados. Para cada empleado, se registran en una línea las horas trabajadas y el valor de la hora, separados por coma.</p>
+      <ul>
+        <li>Validar que las horas trabajadas y el valor de la hora sean positivos.</li>
+        <li>Pagar las horas ordinarias a la tarifa normal.</li>
+        <li>Pagar las horas que superen las 40 semanales con un recargo del 25 %.</li>
+        <li>Calcular el pago individual de cada empleado.</li>
+        <li>Acumular el total de la nómina.</li>
+        <li>Contar cuántos empleados trabajaron más de 40 horas.</li>
+        <li>Mostrar el total pagado por la empresa al finalizar.</li>
+      </ul>
+      <p><strong>Supuesto:</strong> las horas extra se pagan a 1,25 veces el valor de la hora ordinaria.</p>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="empleadosEntrada">Registros de empleados: una línea por empleado, horas y valor por hora separados por coma.</label>
+        <textarea id="empleadosEntrada" rows="4" required></textarea>
+        <button type="submit">Calcular nómina</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <ul id="detalleEmpleados"></ul>
+      <p>Empleados registrados: <strong id="cantidadEmpleados">—</strong></p>
+      <p>Empleados con más de 40 horas: <strong id="conExtras">—</strong></p>
+      <p>Total de la nómina: <strong id="totalNomina">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio7.js"></script>
+</body>
+</html>

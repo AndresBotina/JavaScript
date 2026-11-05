@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 3 · Control de gastos mensuales</title>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Volver al menú</a>
+    <h1>Ejercicio 3: Control de gastos mensuales</h1>
+    <p id="etiquetas">Ciclo while · Acumuladores · Clasificación</p>
+  </header>
+
+  <main>
+    <section id="enunciado">
+      <h2>Enunciado</h2>
+      <p>Una persona quiere llevar el control de sus gastos. Ingresa el presupuesto y los gastos separados por comas; el último gasto debe ser 0.</p>
+      <ul>
+        <li>Registrar los gastos uno por uno.</li>
+        <li>Rechazar los valores negativos.</li>
+        <li>Calcular el total gastado y el dinero restante.</li>
+        <li>Contar cuántos gastos superan los $50.000.</li>
+        <li>Informar si la persona se mantuvo dentro del presupuesto o lo excedió.</li>
+        <li>Si supera el presupuesto, mostrar cuánto dinero le faltó.</li>
+      </ul>
+    </section>
+
+    <section id="controles">
+      <form id="formulario">
+        <label for="presupuestoEntrada">Presupuesto disponible:</label>
+        <input type="number" id="presupuestoEntrada" min="0" step="any" required>
+        <label for="gastosEntrada">Gastos separados por comas; termina con 0:</label>
+        <textarea id="gastosEntrada" rows="3" placeholder="120000, 60000, 0" required></textarea>
+        <button type="submit">Registrar gastos</button>
+      </form>
+    </section>
+
+    <section id="resultado" aria-live="polite">
+      <h2>Resultados</h2>
+      <p id="mensaje">Aún no hay datos. Presiona el botón para comenzar.</p>
+      <p>Presupuesto: <strong id="presupuesto">—</strong></p>
+      <p>Total gastado: <strong id="totalGastado">—</strong></p>
+      <p>Dinero restante: <strong id="restante">—</strong></p>
+      <p>Gastos mayores a $50.000: <strong id="gastosAltos">—</strong></p>
+    </section>
+  </main>
+
+  <script src="js/ejercicio3.js"></script>
+</body>
+</html>
