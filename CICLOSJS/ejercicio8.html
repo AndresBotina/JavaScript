@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio 8 · Juego de adivinar el número</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
+<body data-ejercicio="8">
   <header>
+    <div id="escena3d" aria-hidden="true"></div>
     <a href="index.html">← Volver al menú</a>
-    <h1>Ejercicio 8: Juego de adivinar el número</h1>
+    <h1><span>Ejercicio 8</span> Juego de adivinar el número</h1>
     <p id="etiquetas">Ciclo while · Condiciones · Contadores</p>
   </header>
 
@@ -44,6 +49,13 @@
     </section>
   </main>
 
+  <nav class="pasos" aria-label="Otros ejercicios">
+    <a href="ejercicio7.html"><span>← Ejercicio 7</span>Nómina de empleados</a>
+    <a href="reto.html"><span>Reto final →</span>Cajero automático</a>
+  </nav>
+
   <script src="js/ejercicio8.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/escena3d.js"></script>
 </body>
 </html>

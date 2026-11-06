@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reto final · Cajero automático</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
+<body data-ejercicio="reto">
   <header>
+    <div id="escena3d" aria-hidden="true"></div>
     <a href="index.html">← Volver al menú</a>
-    <h1>Reto final: Cajero automático</h1>
+    <h1><span>Reto final</span> Cajero automático</h1>
     <p id="etiquetas">Validaciones · Variables · Condicionales · Ciclos anidados</p>
   </header>
 
@@ -52,6 +57,13 @@
     </section>
   </main>
 
+  <nav class="pasos" aria-label="Otros ejercicios">
+    <a href="ejercicio8.html"><span>← Ejercicio 8</span>Juego de adivinar el número</a>
+    <a href="index.html"><span>Siguiente →</span>Menú</a>
+  </nav>
+
   <script src="js/reto.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/escena3d.js"></script>
 </body>
 </html>

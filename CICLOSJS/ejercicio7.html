@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicio 7 · Nómina de empleados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
+<body data-ejercicio="7">
   <header>
+    <div id="escena3d" aria-hidden="true"></div>
     <a href="index.html">← Volver al menú</a>
-    <h1>Ejercicio 7: Nómina de empleados</h1>
+    <h1><span>Ejercicio 7</span> Nómina de empleados</h1>
     <p id="etiquetas">Ciclos anidados · Condiciones · Acumuladores</p>
   </header>
 
@@ -46,6 +51,13 @@
     </section>
   </main>
 
+  <nav class="pasos" aria-label="Otros ejercicios">
+    <a href="ejercicio6.html"><span>← Ejercicio 6</span>Estadísticas de ventas de un negocio</a>
+    <a href="ejercicio8.html"><span>Ejercicio 8 →</span>Juego de adivinar el número</a>
+  </nav>
+
   <script src="js/ejercicio7.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/escena3d.js"></script>
 </body>
 </html>

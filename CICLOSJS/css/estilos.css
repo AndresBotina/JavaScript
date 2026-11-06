@@ -1,0 +1,594 @@
+/* Ciclos en JavaScript — negro y rojo sangre */
+
+:root {
+  --fondo: #0c0a0b;
+  --tarjeta: #161213;
+  --campo: #0f0c0d;
+  --borde: #2b2224;
+  --texto: #f3eeec;
+  --suave: #a89c9b;
+  --rojo: #c0101f;
+  --rojo-claro: #f0485a;
+
+  --radio: 22px;
+  --radio-chico: 12px;
+  --separacion: 20px;
+
+  --titulo: "Anton", Impact, "Arial Narrow", sans-serif;
+  --letra: "Instrument Sans", system-ui, sans-serif;
+  --maquina: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  --ancho: min(1120px, 100% - 32px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  padding-bottom: 40px;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--letra);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--rojo); color: #fff; }
+
+a { color: inherit; }
+
+:focus-visible { outline: 2px solid var(--rojo-claro); outline-offset: 3px; }
+
+h1, h2 { margin: 0; font-weight: 400; }
+
+code {
+  padding: 0.1em 0.4em;
+  border-radius: 6px;
+  background: var(--campo);
+  color: var(--rojo-claro);
+  font-family: var(--maquina);
+  font-size: 0.86em;
+}
+
+/* ---------- Cabecera ---------- */
+
+header {
+  position: relative;
+  width: var(--ancho);
+  min-height: 320px;
+  margin: 16px auto 0;
+  padding: 28px clamp(24px, 4vw, 44px) 36px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--tarjeta);
+  overflow: hidden;
+}
+
+#escena3d {
+  position: absolute;
+  inset: 0 0 0 42%;
+  pointer-events: none;
+}
+
+#escena3d canvas { display: block; width: 100%; height: 100%; }
+
+header > *:not(#escena3d) { position: relative; z-index: 1; }
+
+header > a {
+  display: inline-block;
+  color: var(--suave);
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+header > a:hover { color: var(--texto); }
+
+header h1 {
+  max-width: 58%;
+  margin-top: 44px;
+  font-family: var(--titulo);
+  font-size: clamp(2.3rem, 4.6vw, 3.7rem);
+  line-height: 1.14;
+  letter-spacing: 0.005em;
+}
+
+header h1 span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--rojo-claro);
+  font-family: var(--maquina);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+#etiquetas {
+  margin: 16px 0 0;
+  color: var(--suave);
+  font-size: 0.95rem;
+}
+
+/* ---------- Tarjetas del ejercicio ---------- */
+
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "enunciado controles"
+    "enunciado resultado";
+  grid-template-rows: auto 1fr;
+  gap: var(--separacion);
+  width: var(--ancho);
+  margin: var(--separacion) auto 0;
+}
+
+#enunciado, #controles, #resultado {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--tarjeta);
+}
+
+#enunciado { grid-area: enunciado; }
+#controles { grid-area: controles; }
+#resultado { grid-area: resultado; }
+
+#enunciado h2, #resultado h2 {
+  color: var(--suave);
+  font-family: var(--maquina);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+#enunciado > p:first-of-type {
+  margin: 12px 0 22px;
+  font-size: 1.2rem;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+#enunciado ul {
+  list-style: none;
+  counter-reset: paso;
+  margin: 0;
+  padding: 0;
+}
+
+#enunciado li {
+  counter-increment: paso;
+  position: relative;
+  padding: 9px 0 9px 2.4rem;
+  color: #d9d0ce;
+  font-size: 1rem;
+}
+
+#enunciado li::before {
+  content: counter(paso);
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: var(--campo);
+  color: var(--rojo-claro);
+  font-family: var(--maquina);
+  font-size: 0.76rem;
+  line-height: 1.55rem;
+  text-align: center;
+}
+
+#enunciado ul + p {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border-radius: var(--radio-chico);
+  background: var(--campo);
+  font-size: 0.98rem;
+}
+
+/* ---------- Formularios ---------- */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Varios campos cortos: etiqueta e input en la misma fila */
+form:has(input ~ input ~ input):not(:has(textarea)) {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 10px 18px;
+  align-items: center;
+}
+
+form:has(input ~ input ~ input):not(:has(textarea)) button { grid-column: 1 / -1; }
+
+label { color: #d9d0ce; font-size: 0.95rem; line-height: 1.45; }
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 11px 14px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-chico);
+  background: var(--campo);
+  color: var(--texto);
+  font-family: var(--maquina);
+  font-size: 1rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+form:has(input ~ input ~ input):not(:has(textarea)) input { margin-bottom: 0; }
+
+textarea { resize: vertical; line-height: 1.5; }
+
+input::placeholder, textarea::placeholder { color: #75696a; opacity: 1; }
+
+input:focus, textarea:focus {
+  outline: 0;
+  border-color: var(--rojo-claro);
+  box-shadow: 0 0 0 3px rgba(192, 16, 31, 0.35);
+}
+
+button {
+  margin-top: 8px;
+  padding: 13px 22px;
+  border: 0;
+  border-radius: var(--radio-chico);
+  background: var(--rojo);
+  color: #fff;
+  font-family: var(--letra);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+button:hover { background: #d81a2a; }
+
+button:active { transform: scale(0.98); }
+
+/* ---------- Resultados ---------- */
+
+#resultado { font-size: 0.98rem; }
+
+#resultado h2 { margin-bottom: 8px; }
+
+#resultado p {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  margin: 0;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--borde);
+  color: #d9d0ce;
+}
+
+#resultado strong {
+  padding: 0 4px;
+  border-radius: 6px;
+  color: var(--texto);
+  font-family: var(--maquina);
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+#resultado #mensaje {
+  display: block;
+  margin-bottom: 6px;
+  padding: 11px 14px;
+  border: 0;
+  border-radius: var(--radio-chico);
+  background: var(--campo);
+  color: var(--texto);
+}
+
+#resultado p:last-child {
+  align-items: center;
+  border-bottom: 0;
+  padding-bottom: 0;
+  color: var(--texto);
+  font-weight: 600;
+}
+
+#resultado p:last-child strong {
+  color: var(--rojo-claro);
+  font-family: var(--titulo);
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+#resultado ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  font-family: var(--maquina);
+  font-size: 0.9rem;
+}
+
+#resultado ul:empty { display: none; }
+
+#resultado li { padding: 3px 0; }
+
+.recien { animation: tinta 0.9s ease-out; }
+
+@keyframes tinta {
+  0% { background: var(--rojo); color: #fff; }
+  100% { background: transparent; }
+}
+
+/* ---------- Anterior / siguiente ---------- */
+
+.pasos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--separacion);
+  width: var(--ancho);
+  margin: var(--separacion) auto 0;
+}
+
+.pasos a {
+  display: block;
+  padding: 18px 24px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--tarjeta);
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+
+.pasos a + a { text-align: right; }
+
+.pasos a span {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--suave);
+  font-size: 0.86rem;
+  font-weight: 400;
+}
+
+.pasos a:hover { border-color: var(--rojo); }
+
+/* ---------- Menú principal ---------- */
+
+body[data-ejercicio="menu"] header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: min(82svh, 720px);
+  padding: clamp(24px, 4vw, 48px);
+}
+
+body[data-ejercicio="menu"] #escena3d { inset: 0; }
+
+body[data-ejercicio="menu"] header h1 {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(5rem, 15vw, 11rem);
+  line-height: 1.08;
+}
+
+body[data-ejercicio="menu"] header h1 span {
+  margin: 0;
+  color: var(--suave);
+  font-family: var(--letra);
+  font-size: clamp(1.25rem, 2.4vw, 1.8rem);
+  font-weight: 500;
+}
+
+.lema { margin: 14px 0 0; color: var(--suave); }
+
+#progreso {
+  width: min(340px, 100%);
+  margin-top: 26px;
+}
+
+#progreso p {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 8px;
+  color: var(--suave);
+  font-size: 0.92rem;
+}
+
+#progreso strong {
+  color: var(--texto);
+  font-family: var(--maquina);
+  font-weight: 600;
+}
+
+.barra {
+  height: 8px;
+  border-radius: 8px;
+  background: var(--borde);
+  overflow: hidden;
+}
+
+.barra span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 8px;
+  background: var(--rojo);
+  transition: width 0.6s ease;
+}
+
+body[data-ejercicio="menu"] main {
+  display: block;
+  margin-top: 48px;
+}
+
+.bloque + .bloque { margin-top: 44px; }
+
+.bloque h2 {
+  margin-bottom: 16px;
+  font-family: var(--titulo);
+  font-size: 1.6rem;
+  line-height: 1.3;
+}
+
+.bloque ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bloque li { display: grid; }
+
+.bloque p { margin: 0; }
+
+.fila {
+  display: grid;
+  grid-template-columns: 2.8rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    "num nombre estado"
+    "num tipo estado";
+  column-gap: 12px;
+  align-items: center;
+  padding: 18px 20px;
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  background: var(--tarjeta);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.fila:hover, .fila:focus-visible {
+  border-color: var(--rojo);
+  transform: translateY(-2px);
+}
+
+.fila .num {
+  grid-area: num;
+  color: var(--rojo-claro);
+  font-family: var(--titulo);
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+.fila .nombre {
+  grid-area: nombre;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.fila .tipo {
+  grid-area: tipo;
+  color: var(--suave);
+  font-family: var(--maquina);
+  font-size: 0.82rem;
+}
+
+.fila .estado {
+  grid-area: estado;
+  padding: 3px 11px;
+  border-radius: 999px;
+  background: var(--campo);
+  color: var(--suave);
+  font-size: 0.8rem;
+}
+
+.fila.hecho .estado { background: var(--rojo); color: #fff; }
+
+#seccionReto .fila {
+  border-color: var(--rojo);
+  background: var(--rojo);
+}
+
+#seccionReto .fila:hover { background: #d81a2a; }
+
+#seccionReto .fila .num { color: #fff; }
+
+#seccionReto .fila .tipo { color: #ffd9dc; }
+
+#seccionReto .fila .estado { background: rgba(0, 0, 0, 0.3); color: #fff; }
+
+#seccionReto .fila.hecho .estado { background: #fff; color: var(--rojo); }
+
+/* ---------- Página de ejemplos (HTML sin cabecera ni tarjetas) ---------- */
+
+body:not([data-ejercicio]) {
+  width: min(720px, 100% - 32px);
+  margin-inline: auto;
+}
+
+body:not([data-ejercicio]) > h1 {
+  margin: 40px 0 24px;
+  font-family: var(--titulo);
+  font-size: clamp(2.3rem, 6vw, 3.4rem);
+  line-height: 1.15;
+}
+
+body:not([data-ejercicio]) > form {
+  margin-top: var(--separacion);
+  padding: clamp(24px, 3vw, 34px);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--tarjeta);
+}
+
+body:not([data-ejercicio]) > p,
+body:not([data-ejercicio]) > ul {
+  margin: 12px 0 0;
+  padding: 14px 18px;
+  border-radius: var(--radio-chico);
+  background: var(--tarjeta);
+}
+
+body:not([data-ejercicio]) > ul {
+  list-style: none;
+  font-family: var(--maquina);
+  font-size: 0.92rem;
+}
+
+body:not([data-ejercicio]) > p { font-weight: 600; }
+
+body:not([data-ejercicio]) > p:empty,
+body:not([data-ejercicio]) > ul:empty { display: none; }
+
+/* ---------- Pantallas pequeñas ---------- */
+
+@media (max-width: 860px) {
+  :root { --separacion: 16px; }
+
+  #escena3d { inset: 0; opacity: 0.4; }
+
+  header { min-height: 260px; }
+
+  header h1 { max-width: none; }
+
+  main { display: block; }
+
+  main > section + section { margin-top: var(--separacion); }
+
+  body[data-ejercicio="menu"] #escena3d { opacity: 1; }
+
+  body[data-ejercicio="menu"] main > section + section { margin-top: 40px; }
+
+  .bloque ul { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

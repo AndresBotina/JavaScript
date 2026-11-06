@@ -4,38 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ciclos en JavaScript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
+<body data-ejercicio="menu">
   <header>
-    <h1>Ciclos en JavaScript</h1>
-    <p>Taller práctico: for, while y do...while</p>
+    <div id="escena3d" aria-hidden="true"></div>
+    <h1><span>Taller de JavaScript</span> Ciclos</h1>
+    <p class="lema">Taller práctico: for, while y do...while</p>
+    <div id="progreso">
+      <p>Ejercicios completados <strong id="progresoNumero">0/9</strong></p>
+      <div class="barra" aria-hidden="true"><span id="progresoBarra"></span></div>
+    </div>
   </header>
 
   <main>
-    <section id="seccionEjemplos">
+    <section id="seccionEjemplos" class="bloque">
       <h2>1. Ejemplos guiados</h2>
-      <p><a href="ejemplos.html">Abrir los ejemplos de for, while y do...while</a></p>
+      <p><a class="fila" href="ejemplos.html"><span class="num">E</span><span class="nombre">Ejemplos de for, while y do...while</span><span class="tipo">guía</span><span class="estado">Abrir</span></a></p>
     </section>
 
-    <section id="seccionTaller">
+    <section id="seccionTaller" class="bloque">
       <h2>2. Taller</h2>
       <ul>
-        <li><a href="ejercicio1.html">Ejercicio 1: Sistema de compras en una tienda</a></li>
-        <li><a href="ejercicio2.html">Ejercicio 2: Registro de notas de un estudiante</a></li>
-        <li><a href="ejercicio3.html">Ejercicio 3: Control de gastos mensuales</a></li>
-        <li><a href="ejercicio4.html">Ejercicio 4: Análisis de números ingresados</a></li>
-        <li><a href="ejercicio5.html">Ejercicio 5: Sistema de inicio de sesión</a></li>
-        <li><a href="ejercicio6.html">Ejercicio 6: Estadísticas de ventas de un negocio</a></li>
-        <li><a href="ejercicio7.html">Ejercicio 7: Nómina de empleados</a></li>
-        <li><a href="ejercicio8.html">Ejercicio 8: Juego de adivinar el número</a></li>
+        <li><a class="fila" data-ciclo="1" href="ejercicio1.html"><span class="num">01</span><span class="nombre">Sistema de compras en una tienda</span><span class="tipo">while</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="2" href="ejercicio2.html"><span class="num">02</span><span class="nombre">Registro de notas de un estudiante</span><span class="tipo">for</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="3" href="ejercicio3.html"><span class="num">03</span><span class="nombre">Control de gastos mensuales</span><span class="tipo">while</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="4" href="ejercicio4.html"><span class="num">04</span><span class="nombre">Análisis de números ingresados</span><span class="tipo">do...while</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="5" href="ejercicio5.html"><span class="num">05</span><span class="nombre">Sistema de inicio de sesión</span><span class="tipo">while</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="6" href="ejercicio6.html"><span class="num">06</span><span class="nombre">Estadísticas de ventas de un negocio</span><span class="tipo">for</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="7" href="ejercicio7.html"><span class="num">07</span><span class="nombre">Nómina de empleados</span><span class="tipo">anidados</span><span class="estado">Pendiente</span></a></li>
+        <li><a class="fila" data-ciclo="8" href="ejercicio8.html"><span class="num">08</span><span class="nombre">Juego de adivinar el número</span><span class="tipo">while</span><span class="estado">Pendiente</span></a></li>
       </ul>
     </section>
 
-    <section id="seccionReto">
+    <section id="seccionReto" class="bloque">
       <h2>3. Reto final</h2>
-      <p><a href="reto.html">Abrir el reto: cajero automático</a></p>
+      <p><a class="fila" data-ciclo="reto" href="reto.html"><span class="num">R</span><span class="nombre">Cajero automático</span><span class="tipo">todo junto</span><span class="estado">Pendiente</span></a></p>
     </section>
   </main>
 
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/escena3d.js"></script>
 </body>
 </html>
