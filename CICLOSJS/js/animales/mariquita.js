@@ -10,7 +10,7 @@
   // Bisagra del caparazón: en el hombro, junto a la cabeza.
   const BISAGRA = [1.3, 0.5];
   // Cuánto se abre: sube la parte de atrás, se separa en V y rota hacia afuera.
-  const ABRIR = { subir: -0.72, separar: 0.62, rotar: 0.42 };
+  const ABRIR = { subir: -0.85, separar: 0.75, rotar: -0.5 };
 
   const LARGO_ALA = 3.3;
   const ANCHO_ALA = 1.25;
@@ -177,7 +177,7 @@
       this.alas.forEach(function (item) {
         item.pivote.visible = alas > 0.02;
         item.pivote.scale.set(0.45 + alas * 0.55, 1, 0.12 + alas * 0.88);
-        item.pivote.rotation.y = item.lado * (0.32 - alas * 0.5);
+        item.pivote.rotation.y = item.lado * (0.32 - alas * 1.2);
         item.pivote.rotation.x = -item.lado * aleteo * alas;
       });
 
