@@ -2,15 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejemplos de ciclos</title>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
-<body>
-  <h1>Ejemplos de ciclos</h1>
+<body data-ejercicio="ejemplos">
+  <header>
+    <div id="escena3d" data-animal="Pajaro" aria-hidden="true"></div>
+    <a href="index.html">← Volver al menú</a>
+    <h1><span>Ejemplos guiados</span> Ejemplos de ciclos</h1>
+    <p id="etiquetas">for · while · do...while</p>
+  </header>
 
+  <main>
   <form id="formTabla">
     <label for="numeroTabla">Número para la tabla:</label>
     <input type="number" id="numeroTabla" step="1" required>
@@ -34,9 +41,19 @@
   </form>
   <p id="resultadoDado"></p>
   <ul id="listaDado"></ul>
+  </main>
+
+  <nav class="pasos" aria-label="Otros ejercicios">
+    <a href="index.html"><span>← Anterior</span>Menú</a>
+    <a href="ejercicio1.html"><span>Ejercicio 1 →</span>Sistema de compras en una tienda</a>
+  </nav>
 
   <script src="js/ejemplo-for.js"></script>
   <script src="js/ejemplo-while.js"></script>
   <script src="js/ejemplo-do-while.js"></script>
+  <script src="js/vendor/three.min.js"></script>
+  <script src="js/animales/base.js"></script>
+  <script src="js/animales/pajaro.js"></script>
+  <script src="js/escena3d.js"></script>
 </body>
 </html>

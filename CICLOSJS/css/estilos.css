@@ -521,63 +521,76 @@ body[data-ejercicio="menu"] main {
 
 #seccionReto .fila.hecho .estado { background: #fff; color: var(--rojo); }
 
-/* ---------- Página de ejemplos (HTML sin cabecera ni tarjetas) ---------- */
+/* ---------- Página de ejemplos ---------- */
 
-body:not([data-ejercicio]) {
-  width: min(720px, 100% - 32px);
-  margin-inline: auto;
+body[data-ejercicio="ejemplos"] {
+  --ancho: min(760px, 100% - 32px);
 }
 
-body:not([data-ejercicio]) > h1 {
-  margin: 40px 0 24px;
-  font-family: var(--titulo);
-  font-size: clamp(2.3rem, 6vw, 3.4rem);
-  line-height: 1.15;
-}
+body[data-ejercicio="ejemplos"] main { display: block; }
 
-body:not([data-ejercicio]) > form {
-  margin-top: var(--separacion);
+main > form {
   padding: clamp(24px, 3vw, 34px);
   border: 1px solid var(--borde);
   border-radius: var(--radio);
   background: var(--tarjeta);
 }
 
-body:not([data-ejercicio]) > p,
-body:not([data-ejercicio]) > ul {
+main > form + form,
+main > p + form,
+main > ul + form { margin-top: var(--separacion); }
+
+main > p,
+main > ul {
   margin: 12px 0 0;
   padding: 14px 18px;
   border-radius: var(--radio-chico);
   background: var(--tarjeta);
 }
 
-body:not([data-ejercicio]) > ul {
+main > ul {
   list-style: none;
   font-family: var(--maquina);
   font-size: 0.92rem;
 }
 
-body:not([data-ejercicio]) > p { font-weight: 600; }
+main > p { font-weight: 600; }
 
-body:not([data-ejercicio]) > p:empty,
-body:not([data-ejercicio]) > ul:empty { display: none; }
+main > p:empty,
+main > ul:empty { display: none; }
+
+/* ---------- Reto: la araña camina por toda la ventana ---------- */
+
+body[data-ejercicio="reto"] #escena3d {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 1;
+}
+
+body[data-ejercicio="reto"] header { min-height: 0; }
+
+body[data-ejercicio="reto"] header h1 { max-width: none; }
 
 /* ---------- Pantallas pequeñas ---------- */
 
 @media (max-width: 860px) {
   :root { --separacion: 16px; }
 
-  #escena3d { inset: 0; opacity: 0.4; }
+  /* En celular el animal va arriba y el título debajo, sin encimarse. */
+  #escena3d { inset: 0 0 auto 0; height: 200px; }
 
-  header { min-height: 260px; }
+  header { min-height: 0; }
 
-  header h1 { max-width: none; }
+  header h1 { max-width: none; margin-top: 170px; }
+
+  body[data-ejercicio="reto"] header h1 { margin-top: 36px; }
 
   main { display: block; }
 
   main > section + section { margin-top: var(--separacion); }
 
-  body[data-ejercicio="menu"] #escena3d { opacity: 1; }
+  body[data-ejercicio="menu"] #escena3d { height: auto; }
 
   body[data-ejercicio="menu"] main > section + section { margin-top: 40px; }
 
