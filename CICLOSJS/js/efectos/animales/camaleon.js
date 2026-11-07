@@ -35,10 +35,28 @@
   const ALTURA_PASO = 0.2;
 
   // Ojos.
-  const OJO_RAPIDEZ = 15;
-  const OJO_ESPERA_MIN = 0.7;
-  const OJO_ESPERA_MAX = 2.6;
-  const OJO_GIRO_MAX = 1.3;
+  const SACADA_MIN = 0.1;
+  const SACADA_MAX = 0.15;
+  const PAUSA_EXPLORAR_MIN = 0.7;
+  const PAUSA_EXPLORAR_MAX = 2.6;
+  const PAUSA_SEGUIR_MIN = 0.16;
+  const PAUSA_SEGUIR_MAX = 0.42;
+  const PAUSA_FIJAR = 0.09;
+  const UMBRAL_AJUSTE = 0.07;
+
+  // Rango de cada ojo en radianes, medido desde su dirección de reposo.
+  const OJO_ADELANTE = 0.85;
+  const OJO_ATRAS = 0.75;
+  const OJO_VERTICAL = 0.5;
+  const OJO_REPOSO = 0.2;
+
+  // Forma de la torreta, en medidas de la cabeza.
+  const OJO_CENTRO = [0.44, 0.07, 0.1];
+  const OJO_BASE = [0.3, 0.2];
+  const OJO_LARGO = 0.43;
+  const OJO_PUNTA = 0.085;
+  const OJO_ANILLOS = 7;
+  const OJO_LADOS = 14;
 
   // Cola.
   const COLA_ESLABONES = 15;
@@ -100,6 +118,7 @@
   const MANDIBULA = [[0, -0.02, 0.2, 0.08], [0.4, -0.04, 0.2, 0.09], [0.72, -0.02, 0.1, 0.06], [0.84, 0, 0.03, 0.02]];
 
   const ARRIBA = new THREE.Vector3(0, 1, 0);
+  const LADO = new THREE.Vector3(1, 0, 0);
 
   function limitar(valor, minimo, maximo) {
     return Math.max(minimo, Math.min(maximo, valor));
@@ -255,6 +274,9 @@
       this.c = new THREE.Vector3();
       this.d = new THREE.Vector3();
       this.boca = new THREE.Vector3();
+      this.q1 = new THREE.Quaternion();
+      this.q2 = new THREE.Quaternion();
+      this.q3 = new THREE.Quaternion();
 
       this.uniformes = {
         uFase: { value: PIEL_FASE_QUIETA },
@@ -355,28 +377,147 @@
       en(this.cabeza, caja(0.72, 0.016, 0.3, COLOR.negro), 0.56, -0.18, 0);
     }
 
-    crearOjos() {
-      this.ojos = [1, -1].map(function (lado) {
-        const reposo = lado > 0 ? 0 : Math.PI;
-        const torreta = giro(this.cabeza, 0.46, 0.12, 0.22 * lado);
-        torreta.rotation.order = "YXZ";
-        torreta.rotation.y = reposo;
-        torreta.scale.setScalar(1.22);
+    // Altura del cráneo a un lado de la cabeza, para apoyar la base del ojo.
+    superficieCraneo(x, y) {
+      const perfil = this.perfilCraneo;
+      let i = 0;
+      while (i < perfil.length - 2 && perfil[i + 1][0] < x) i++;
+      const a = perfil[i];
+      const b = perfil[i + 1];
+      const f = limitar((x - a[0]) / (b[0] - a[0]), 0, 1);
+      const centro = a[1] + (b[1] - a[1]) * f;
+      const ancho = a[2] + (b[2] - a[2]) * f;
+      const alto = a[3] + (b[3] - a[3]) * f;
+      const relativo = limitar((y - centro) / alto, -0.98, 0.98);
+      return ancho * Math.sqrt(1 - relativo * relativo);
+    }
 
-        this.conPiel(en(torreta, bola(0.21, COLOR.rojo, [1, 1, 0.8])), 0.11, 0.1);
-        const conoOjo = en(torreta, malla(new THREE.CylinderGeometry(0.095, 0.2, 0.22, 10), COLOR.rojo), 0, 0, 0.14);
-        conoOjo.rotation.x = Math.PI / 2;
-        this.conPiel(conoOjo, 0.09, 0.09, 1.1);
-        en(torreta, bola(0.095, COLOR.crema, [1, 1, 0.45]), 0, 0, 0.25);
-        const pupila = en(torreta, ojo(0.05), 0, 0, 0.27);
-        pupila.scale.z = 0.7;
+    crearOjos() {
+      this.perfilCraneo = refinar(CRANEO, 3);
+      this.ojos = [1, -1].map(function (lado) {
+        const centro = new THREE.Vector3(OJO_CENTRO[0], OJO_CENTRO[1], OJO_CENTRO[2] * lado);
+        const eje = new THREE.Vector3(Math.sin(OJO_REPOSO), 0, Math.cos(OJO_REPOSO) * lado);
+        const reposo = this.crearAnillos(centro, eje, lado);
+
+        // Piel de la torreta: una sola malla que se dobla sobre el cráneo.
+        const piel = new THREE.Mesh(this.geometriaOjo(reposo, lado), this.piel);
+        piel.frustumCulled = false;
+        this.cabeza.add(piel);
+
+        // La punta gira sobre el centro del ojo, dentro del cráneo.
+        const punta = giro(this.cabeza, centro.x, centro.y, centro.z);
+        const orientar = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), eje);
+        en(punta, bola(OJO_PUNTA * 1.05, COLOR.negro, [1, 1, 0.5]), 0, 0, OJO_LARGO - 0.015);
+        en(punta, malla(new THREE.TorusGeometry(OJO_PUNTA, 0.02, 6, OJO_LADOS), COLOR.rosa), 0, 0, OJO_LARGO);
+        const pupila = en(punta, ojo(0.04), 0, 0, OJO_LARGO + 0.002);
+        pupila.scale.z = 0.6;
 
         return {
-          torreta: torreta, lado: lado, reposo: reposo,
-          giro: 0, alto: 0, metaGiro: 0, metaAlto: 0,
-          espera: entre(OJO_ESPERA_MIN, OJO_ESPERA_MAX)
+          lado: lado, centro: centro, eje: eje, reposo: reposo, piel: piel, punta: punta, orientar: orientar,
+          adelante: 0, arriba: 0, desdeAdelante: 0, desdeArriba: 0, metaAdelante: 0, metaArriba: 0,
+          duracion: 0, tiempo: 0, pausa: entre(PAUSA_EXPLORAR_MIN, PAUSA_EXPLORAR_MAX), dibujado: null
         };
       }, this);
+      this.ojos.forEach(function (item) { this.doblarOjo(item); }, this);
+    }
+
+    // Anillos en reposo: el primero se apoya en el cráneo y el último es la punta.
+    crearAnillos(centro, eje, lado) {
+      const u1 = new THREE.Vector3(0, 1, 0).cross(eje).normalize();
+      const u2 = eje.clone().cross(u1).normalize();
+      const puntaCentro = centro.clone().addScaledVector(eje, OJO_LARGO);
+      const anillos = [];
+
+      for (let j = 0; j <= OJO_ANILLOS; j++) {
+        const u = j / OJO_ANILLOS;
+        const anillo = [];
+        for (let i = 0; i < OJO_LADOS; i++) {
+          // Cada anillo va medio paso corrido, para que las caras formen escamas.
+          const angulo = ((i + (j % 2) * 0.5) / OJO_LADOS) * Math.PI * 2;
+          const c = Math.cos(angulo);
+          const s = Math.sin(angulo) * lado;
+
+          const x = OJO_CENTRO[0] + OJO_BASE[0] * c;
+          const y = OJO_CENTRO[1] + OJO_BASE[1] * s;
+          const base = new THREE.Vector3(x, y, (this.superficieCraneo(x, y) - 0.012) * lado);
+          const punta = puntaCentro.clone().addScaledVector(u1, OJO_PUNTA * c * lado).addScaledVector(u2, OJO_PUNTA * s);
+
+          // Nace casi plana sobre la piel y se eleva hacia la punta, sin escalón.
+          const altura = this.c.subVectors(punta, base).dot(eje);
+          const cierre = Math.pow(u, 1.15);
+          const punto = base.lerp(punta, cierre);
+          punto.addScaledVector(eje, (Math.pow(u, 2.3) - cierre) * altura);
+          anillo.push(punto);
+        }
+        anillos.push(anillo);
+      }
+      return anillos;
+    }
+
+    geometriaOjo(anillos, lado) {
+      const caras = [];
+      for (let j = 0; j < OJO_ANILLOS; j++) {
+        for (let i = 0; i < OJO_LADOS; i++) {
+          const siguiente = (i + 1) % OJO_LADOS;
+          const a = [j, i];
+          const b = [j, siguiente];
+          const c = [j + 1, i];
+          const d = [j + 1, siguiente];
+          caras.push([a, b, c], [b, d, c]);
+        }
+      }
+
+      const posiciones = new Float32Array(caras.length * 9);
+      const piel = new Float32Array(caras.length * 12);
+      this.mapaOjo = caras;
+      caras.forEach(function (cara, n) {
+        const p = cara.map(function (v) { return anillos[v[0]][v[1]]; });
+        const x = (p[0].x + p[1].x + p[2].x) / 3;
+        const y = (p[0].y + p[1].y + p[2].y) / 3;
+
+        // Mismas coordenadas de piel que la cabeza, para que el color continúe.
+        const s = 0.2 - ((x + 0.16) / 1.16) * 0.18;
+        const v = limitar((y + 0.45) / 0.84, 0, 1);
+        const azar = Math.abs(Math.sin((n + 1) * 12.9898 + lado * 78.233) * 43758.5453) % 1;
+        const anillo = Math.min(cara[0][0], cara[1][0], cara[2][0]);
+        // Los primeros anillos se aclaran para fundirse con el cráneo.
+        const fundido = Math.max(0, 1 - anillo / 3) * 0.14;
+        const tono = 1 + fundido - (anillo % 2) * 0.08 + (anillo / OJO_ANILLOS) * 0.1;
+        for (let k = 0; k < 3; k++) piel.set([s, v, azar, tono], n * 12 + k * 4);
+      });
+
+      const geometria = new THREE.BufferGeometry();
+      geometria.setAttribute("position", new THREE.BufferAttribute(posiciones, 3));
+      geometria.setAttribute("aPiel", new THREE.BufferAttribute(piel, 4));
+      return geometria;
+    }
+
+    // Cada anillo gira una parte del ángulo: la base no se mueve y la punta gira todo.
+    doblarOjo(item) {
+      const giroTotal = this.q1.setFromAxisAngle(ARRIBA, item.lado * item.adelante);
+      const alzar = this.q2.setFromAxisAngle(LADO, -item.lado * item.arriba);
+      giroTotal.multiply(alzar);
+
+      const posicion = item.piel.geometry.attributes.position;
+      const doblados = [];
+      for (let j = 0; j <= OJO_ANILLOS; j++) {
+        const u = j / OJO_ANILLOS;
+        const parcial = this.q3.identity().slerp(giroTotal, Math.pow(u, 1.05));
+        doblados.push(item.reposo[j].map(function (punto) {
+          return punto.clone().sub(item.centro).applyQuaternion(parcial).add(item.centro);
+        }));
+      }
+
+      this.mapaOjo.forEach(function (cara, n) {
+        cara.forEach(function (v, k) {
+          const punto = doblados[v[0]][v[1]];
+          posicion.setXYZ(n * 3 + k, punto.x, punto.y, punto.z);
+        });
+      });
+      posicion.needsUpdate = true;
+
+      item.punta.quaternion.copy(giroTotal).multiply(item.orientar);
+      item.dibujado = item.adelante + item.arriba * 7;
     }
 
     crearCola() {
@@ -781,42 +922,69 @@
     mirarPunto(item, punto) {
       const dir = this.a.copy(punto);
       this.cabeza.worldToLocal(dir);
-      dir.sub(item.torreta.position);
-      const absoluto = Math.atan2(dir.x, dir.z);
-      const diferencia = absoluto - item.reposo;
-      item.metaGiro = limitar(Math.atan2(Math.sin(diferencia), Math.cos(diferencia)), -OJO_GIRO_MAX, OJO_GIRO_MAX);
-      item.metaAlto = limitar(-Math.atan2(dir.y, Math.hypot(dir.x, dir.z)), -0.9, 0.9);
+      dir.sub(item.centro);
+      const adelante = Math.atan2(dir.x, dir.z * item.lado) - OJO_REPOSO;
+      item.metaAdelante = limitar(adelante, -OJO_ATRAS, OJO_ADELANTE);
+      item.metaArriba = limitar(Math.atan2(dir.y, Math.hypot(dir.x, dir.z)), -OJO_VERTICAL, OJO_VERTICAL);
+    }
+
+    // Salto rápido hacia la meta; la duración crece un poco con la distancia.
+    iniciarSacada(item) {
+      const distancia = Math.hypot(item.metaAdelante - item.adelante, item.metaArriba - item.arriba);
+      item.desdeAdelante = item.adelante;
+      item.desdeArriba = item.arriba;
+      item.tiempo = 0;
+      item.duracion = SACADA_MIN + (SACADA_MAX - SACADA_MIN) * Math.min(1, distancia);
     }
 
     actualizarOjos(dt) {
       // Sigue con el ojo que queda hacia la cámara.
       const guia = this.direccion > 0 ? 0 : 1;
       const hayPunto = this.modoOjos !== "explorar";
+      const fijando = this.modoOjos === "fijar";
       const punto = this.modoOjos === "seguir" ? this.cursor.mundo : this.objetivo;
 
       this.ojos.forEach(function (item, i) {
-        const sigue = hayPunto && (this.modoOjos === "fijar" || i === guia);
+        const sigue = hayPunto && (fijando || i === guia);
+
+        if (item.duracion > 0) {
+          // Arranca de golpe y frena suave.
+          item.tiempo += dt;
+          const avance = Math.min(1, item.tiempo / item.duracion);
+          const curva = 1 - Math.pow(1 - avance, 3);
+          item.adelante = item.desdeAdelante + (item.metaAdelante - item.desdeAdelante) * curva;
+          item.arriba = item.desdeArriba + (item.metaArriba - item.desdeArriba) * curva;
+          if (avance >= 1) {
+            item.duracion = 0;
+            if (fijando) item.pausa = PAUSA_FIJAR;
+            else if (sigue) item.pausa = entre(PAUSA_SEGUIR_MIN, PAUSA_SEGUIR_MAX);
+            else item.pausa = entre(PAUSA_EXPLORAR_MIN, PAUSA_EXPLORAR_MAX);
+          }
+          return;
+        }
+
+        // En la pausa el ojo queda completamente quieto.
+        if (sigue) item.pausa = Math.min(item.pausa, fijando ? PAUSA_FIJAR : PAUSA_SEGUIR_MAX);
+        item.pausa -= dt;
+        if (item.pausa > 0) return;
+
         if (sigue) {
           this.mirarPunto(item, punto);
+          const lejos = Math.hypot(item.metaAdelante - item.adelante, item.metaArriba - item.arriba);
+          if (lejos > UMBRAL_AJUSTE) this.iniciarSacada(item);
+          else item.pausa = PAUSA_FIJAR;
         } else {
-          item.espera -= dt;
-          if (item.espera <= 0) {
-            item.espera = entre(OJO_ESPERA_MIN, OJO_ESPERA_MAX);
-            item.metaGiro = entre(-1.1, 1.1);
-            item.metaAlto = entre(-0.55, 0.4);
-          }
+          item.metaAdelante = entre(-OJO_ATRAS * 0.9, OJO_ADELANTE * 0.9);
+          item.metaArriba = entre(-OJO_VERTICAL * 0.9, OJO_VERTICAL * 0.9);
+          this.iniciarSacada(item);
         }
-        const rapidez = mezcla(OJO_RAPIDEZ, dt);
-        item.giro += (item.metaGiro - item.giro) * rapidez;
-        item.alto += (item.metaAlto - item.alto) * rapidez;
       }, this);
     }
 
     dibujarOjos() {
       this.ojos.forEach(function (item) {
-        item.torreta.rotation.y = item.reposo + item.giro;
-        item.torreta.rotation.x = item.alto;
-      });
+        if (item.dibujado !== item.adelante + item.arriba * 7) this.doblarOjo(item);
+      }, this);
     }
 
     /* ---------- Cabeza, cola y lengua ---------- */
