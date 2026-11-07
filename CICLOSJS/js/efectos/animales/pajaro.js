@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // pajaro.js — Página de ejemplos. Aletea en el aire con un leve balanceo.
 (function () {
   const { Animal, util } = window.Animales;

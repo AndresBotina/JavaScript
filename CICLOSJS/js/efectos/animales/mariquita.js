@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // mariquita.js — Ejercicio 4. Camina, y a ratos levanta el caparazón y despliega las alas.
 (function () {
   const { Animal, util } = window.Animales;

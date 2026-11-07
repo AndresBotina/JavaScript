@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // hormiga.js — Ejercicio 1. Lleva un cubo de azúcar en las mandíbulas.
 // Las patas tocan el suelo de verdad: cada pie se queda quieto mientras el cuerpo avanza.
 (function () {

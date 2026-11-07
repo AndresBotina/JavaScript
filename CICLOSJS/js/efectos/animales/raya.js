@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // raya.js — Ejercicio 3. Manta raya que planea en el sitio ondulando las alas.
 // Mira hacia +Z, las alas van sobre el eje X y el lomo hacia +Y.
 (function () {

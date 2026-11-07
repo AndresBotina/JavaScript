@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // pez.js — Ejercicio 8. Nada de lado a lado ondulando el cuerpo y la cola.
 (function () {
   const { Animal, util } = window.Animales;

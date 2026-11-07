@@ -1,3 +1,6 @@
+// Capa visual decorativa, independiente de la lógica de los ejercicios.
+// Además de la escena 3D, maneja el progreso del menú (localStorage, "Listo" y barra)
+// y el resaltado de resultados.
 // escena3d.js — Decoración del sitio: progreso del taller y escena 3D del animal de cada página.
 // No hace parte de los ejercicios. Todo va dentro de una función para que
 // sus variables no choquen con las de ejercicio1.js, ejercicio2.js, etc.

@@ -67,16 +67,6 @@ header {
   overflow: hidden;
 }
 
-#escena3d {
-  position: absolute;
-  inset: 0 0 0 42%;
-  pointer-events: none;
-}
-
-#escena3d canvas { display: block; width: 100%; height: 100%; }
-
-header > *:not(#escena3d) { position: relative; z-index: 1; }
-
 header > a {
   display: inline-block;
   color: var(--suave);
@@ -320,13 +310,6 @@ button:active { transform: scale(0.98); }
 
 #resultado li { padding: 3px 0; }
 
-.recien { animation: tinta 0.9s ease-out; }
-
-@keyframes tinta {
-  0% { background: var(--rojo); color: #fff; }
-  100% { background: transparent; }
-}
-
 /* ---------- Anterior / siguiente ---------- */
 
 .pasos {
@@ -370,8 +353,6 @@ body[data-ejercicio="menu"] header {
   min-height: min(82svh, 720px);
   padding: clamp(24px, 4vw, 48px);
 }
-
-body[data-ejercicio="menu"] #escena3d { inset: 0; }
 
 body[data-ejercicio="menu"] header h1 {
   max-width: none;
@@ -559,14 +540,7 @@ main > p { font-weight: 600; }
 main > p:empty,
 main > ul:empty { display: none; }
 
-/* ---------- Reto: la araña camina por toda la ventana ---------- */
-
-body[data-ejercicio="reto"] #escena3d {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  opacity: 1;
-}
+/* ---------- Reto ---------- */
 
 body[data-ejercicio="reto"] header { min-height: 0; }
 
@@ -578,8 +552,6 @@ body[data-ejercicio="reto"] header h1 { max-width: none; }
   :root { --separacion: 16px; }
 
   /* En celular el animal va arriba y el título debajo, sin encimarse. */
-  #escena3d { inset: 0 0 auto 0; height: 200px; }
-
   header { min-height: 0; }
 
   header h1 { max-width: none; margin-top: 170px; }
@@ -589,8 +561,6 @@ body[data-ejercicio="reto"] header h1 { max-width: none; }
   main { display: block; }
 
   main > section + section { margin-top: var(--separacion); }
-
-  body[data-ejercicio="menu"] #escena3d { height: auto; }
 
   body[data-ejercicio="menu"] main > section + section { margin-top: 40px; }
 

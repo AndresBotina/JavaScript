@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // serpiente.js — Menú principal. Crece con cada ejercicio terminado.
 (function () {
   const ANILLOS = 300;

@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // abeja.js — Ejercicio 7. La obrera: aleteo rápido y vuelo errático en trayectos cortos.
 (function () {
   const { Animal, util } = window.Animales;

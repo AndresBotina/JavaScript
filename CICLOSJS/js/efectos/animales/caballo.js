@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // caballo.js — Ejercicio 6. Ciclo de caminata de cuatro tiempos, con cabeza y cola.
 (function () {
   const { Animal, util } = window.Animales;

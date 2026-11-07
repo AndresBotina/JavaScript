@@ -1,0 +1,45 @@
+/* efectos.css — Capa visual decorativa: escena 3D y resaltado de resultados.
+   Se carga después de estilos.css. */
+
+/* ---------- Escena 3D ---------- */
+
+#escena3d {
+  position: absolute;
+  inset: 0 0 0 42%;
+  pointer-events: none;
+}
+
+#escena3d canvas { display: block; width: 100%; height: 100%; }
+
+header > *:not(#escena3d) { position: relative; z-index: 1; }
+
+/* ---------- Resaltado de resultados nuevos ---------- */
+
+.recien { animation: tinta 0.9s ease-out; }
+
+@keyframes tinta {
+  0% { background: var(--rojo); color: #fff; }
+  100% { background: transparent; }
+}
+
+/* ---------- Menú principal ---------- */
+
+body[data-ejercicio="menu"] #escena3d { inset: 0; }
+
+/* ---------- Reto: la araña camina por toda la ventana ---------- */
+
+body[data-ejercicio="reto"] #escena3d {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  opacity: 1;
+}
+
+/* ---------- Pantallas pequeñas ---------- */
+
+@media (max-width: 860px) {
+  /* En celular el animal va arriba, sin encimarse con el título. */
+  #escena3d { inset: 0 0 auto 0; height: 200px; }
+
+  body[data-ejercicio="menu"] #escena3d { height: auto; }
+}

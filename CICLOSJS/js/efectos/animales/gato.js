@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // gato.js — Ejercicio 5. Guardián sentado: respira, mueve la cola, parpadea y vigila el mouse.
 (function () {
   const { Animal, util } = window.Animales;

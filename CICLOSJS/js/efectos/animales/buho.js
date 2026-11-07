@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // buho.js — Ejercicio 2. El profesor: mira a los lados y parpadea sobre su rama.
 (function () {
   const { Animal, util } = window.Animales;

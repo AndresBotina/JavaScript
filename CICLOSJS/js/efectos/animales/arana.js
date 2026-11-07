@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // arana.js — Reto final. Camina sobre el "vidrio" de la pantalla y teje telarañas.
 // Usa una cámara plana donde 1 unidad = 1 píxel, así el recorrido calza con la ventana.
 (function () {

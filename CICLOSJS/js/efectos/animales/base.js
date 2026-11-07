@@ -1,3 +1,4 @@
+// Capa visual decorativa, independiente de los ejercicios.
 // base.js — Piezas comunes para armar los animales con Three.js.
 // Cada animal es una clase con:
 //   constructor(ctx)      crea el modelo
