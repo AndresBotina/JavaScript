@@ -3,7 +3,7 @@
 // La mano hace de péndulo; al soltarse vuela en un arco real hasta el siguiente bejuco.
 (function () {
   const { Animal, util } = window.Animales;
-  const { COLOR, material, bola, cono, tubo, caja, hueso, ojo, en, giro, molde } = util;
+  const { COLOR, material, bola, caja, hueso, ojo, en, giro, molde, extremidad } = util;
 
   // Física del balanceo.
   const GRAVEDAD = 9;
@@ -62,6 +62,27 @@
   const BASE_COLA = -1.3;
   const LARGO_COLGADO = -BASE_COLA + ESLABONES_RECTOS * LARGO_ESLABON;
 
+  // Perfiles de las extremidades: [t, radio], del cuerpo hacia la punta.
+  const PERFIL_BRAZO = [[0, 0.07], [0.07, 0.15], [0.3, 0.165], [0.62, 0.13], [0.92, 0.1], [1, 0.06]];
+  const PERFIL_ANTEBRAZO = [[0, 0.06], [0.08, 0.105], [0.3, 0.112], [0.68, 0.085], [0.94, 0.07], [1, 0.055]];
+  const PERFIL_MUSLO = [[0, 0.1], [0.1, 0.17], [0.38, 0.175], [0.74, 0.125], [0.95, 0.095], [1, 0.06]];
+  const PERFIL_PIERNA = [[0, 0.06], [0.1, 0.1], [0.34, 0.11], [0.74, 0.075], [0.95, 0.06], [1, 0.04]];
+  const PERFIL_DEDO = [[0, 0.03], [0.2, 0.04], [0.8, 0.034], [1, 0.016]];
+  const SOLAPE = 0.08;
+
+  // Torso: [altura, 0, fondo, ancho], de las caderas al cuello.
+  const TORSO = [
+    [-1.44, 0, 0.09, 0.12], [-1.28, 0, 0.23, 0.32], [-1.06, 0, 0.27, 0.36], [-0.82, 0, 0.27, 0.3],
+    [-0.58, 0, 0.23, 0.24], [-0.34, 0, 0.28, 0.32], [-0.08, 0, 0.31, 0.41], [0.1, 0, 0.23, 0.43], [0.24, 0, 0.1, 0.14]
+  ];
+
+  // Dedos: cuánto se cierran. Sobre el bejuco quedan enganchados.
+  const MANO_AGARRA = 1;
+  const MANO_RELAJADA = 0.55;
+  const MANO_ABIERTA = 0.08;
+  const MANO_RAPIDEZ = 16;
+  const RADIO_GANCHO = 0.07;
+
   const ARRIBA = new THREE.Vector3(0, 1, 0);
 
   function limitar(valor, minimo, maximo) {
@@ -95,6 +116,8 @@
       this.manoAgarrada = 0;
       this.agarre = AGARRE;
       this.pendienteSaludo = false;
+      this.punto2 = new THREE.Vector3();
+      this.punto3 = new THREE.Vector3();
       this.asistencia = 0;
       this.fallos = 0;
 
@@ -156,12 +179,9 @@
     }
 
     crearCuerpo() {
-      const torso = en(this.grupo, molde([
-        [-1.38, 0, 0.16, 0.2], [-1.05, 0, 0.3, 0.36], [-0.55, 0, 0.27, 0.32],
-        [-0.12, 0, 0.3, 0.42], [0.1, 0, 0.17, 0.2]
-      ], COLOR.rojo, 9));
+      const torso = en(this.grupo, molde(TORSO, COLOR.rojo, 12));
       torso.rotation.z = Math.PI / 2;
-      en(this.grupo, bola(0.25, COLOR.vino, [0.9, 1.7, 0.4]), 0, -0.68, 0.2);
+      en(this.grupo, bola(0.24, COLOR.vino, [0.85, 1.4, 0.3]), 0, -0.82, 0.19);
     }
 
     crearCabeza() {
@@ -178,13 +198,31 @@
 
     crearPiernas() {
       this.piernas = [-1, 1].map(function (lado) {
-        const cadera = giro(this.grupo, 0.2 * lado, -1.28, 0);
-        en(cadera, hueso(0.13, 0.1, 0.62, COLOR.rojo));
-        const rodilla = giro(cadera, 0, -0.6, 0);
-        en(rodilla, hueso(0.1, 0.075, 0.55, COLOR.vino));
-        en(rodilla, bola(0.13, COLOR.vino, [1, 0.7, 1.6]), 0, -0.6, 0.08);
-        return { cadera: cadera, rodilla: rodilla, lado: lado };
+        const cadera = giro(this.grupo, 0.21 * lado, -1.24, 0);
+        en(cadera, extremidad(PERFIL_MUSLO, COLOR.rojo, 9, { desdeArriba: 0.66, solape: SOLAPE }));
+        const rodilla = giro(cadera, 0, -0.64, 0);
+        en(rodilla, extremidad(PERFIL_PIERNA, COLOR.rojo, 9, { desdeArriba: 0.58, solape: SOLAPE }));
+
+        // Pie alargado con dedos que se curvan para agarrar.
+        const pie = giro(rodilla, 0, -0.58, 0);
+        const planta = en(pie, extremidad([[0, 0.05], [0.25, 0.1], [0.75, 0.1], [1, 0.05]], COLOR.vino, 8, { desdeArriba: 0.26, plano: 0.55 }));
+        planta.rotation.x = -Math.PI / 2;
+        const dedos = [-1.5, -0.5, 0.5, 1.5].map(function (posicion) {
+          return this.crearDedo(pie, posicion * 0.05, 0, 0.24, COLOR.vino);
+        }, this);
+        return { cadera: cadera, rodilla: rodilla, pie: pie, lado: lado, dedos: dedos };
       }, this);
+    }
+
+    // Dedo de dos falanges que nace hacia +Z.
+    crearDedo(padre, x, y, z, color) {
+      const base = giro(padre, x, y, z);
+      const primera = en(base, extremidad(PERFIL_DEDO, color, 5, { desdeArriba: 0.12 }));
+      primera.rotation.x = -Math.PI / 2;
+      const punta = giro(base, 0, 0, 0.11);
+      const segunda = en(punta, extremidad(PERFIL_DEDO, color, 5, { desdeArriba: 0.11 }));
+      segunda.rotation.x = -Math.PI / 2;
+      return { base: base, punta: punta };
     }
 
     crearCola() {
@@ -204,15 +242,25 @@
       this.brazos = [-1, 1].map(function (lado) {
         const brazo = {
           lado: lado,
-          superior: tubo(0.1, 0.085, 1, COLOR.rojo),
-          inferior: tubo(0.085, 0.065, 1, COLOR.vino),
-          codo: bola(0.1, COLOR.rojo),
-          palma: bola(0.13, COLOR.rosa),
+          superior: extremidad(PERFIL_BRAZO, COLOR.rojo, 9, { solape: SOLAPE }),
+          inferior: extremidad(PERFIL_ANTEBRAZO, COLOR.rojo, 9, { solape: SOLAPE }),
+          mano: new THREE.Group(),
+          dedos: [],
+          cierre: MANO_RELAJADA,
+          codo: new THREE.Vector3(),
           hombro: new THREE.Vector3(),
           pos: new THREE.Vector3(),
           meta: new THREE.Vector3()
         };
-        this.ctx.escena.add(brazo.superior, brazo.inferior, brazo.codo, brazo.palma);
+
+        // Mano en gancho: palma alargada y cuatro dedos, sin pulgar.
+        const palma = en(brazo.mano, extremidad([[0, 0.05], [0.2, 0.085], [0.8, 0.085], [1, 0.05]], COLOR.vino, 7, { plano: 0.55 }), RADIO_GANCHO * 0.8, 0.09, 0);
+        palma.scale.y = 0.36;
+        [0, 1, 2, 3].forEach(function (i) {
+          brazo.dedos.push(this.crearDedo(brazo.mano, RADIO_GANCHO, 0.01 + i * 0.066, 0, COLOR.vino));
+        }, this);
+
+        this.ctx.escena.add(brazo.superior, brazo.inferior, brazo.mano);
         return brazo;
       }, this);
     }
@@ -615,18 +663,25 @@
         const l = brazo.lado;
 
         if (this.estado === "volar") {
-          if (i !== this.mano) this.metaLocal(brazo, 0.9 * l, -1.1, -0.45);
+          if (i !== this.mano) this.metaColgando(brazo);
         } else if (this.estado === "cola") {
           this.metaColgado(brazo, t);
         } else if (this.estado === "retomar" && i === this.mano) {
           this.puntoBejuco(this.bejuco, this.agarre, brazo.meta);
         } else if (this.estado === "balancear") {
-          // La mano libre acompaña el impulso con retraso.
-          this.metaLocal(brazo, 0.75 * l, -1.3, 0.55 + Math.sin(t * 1.3) * 0.2);
+          this.metaColgando(brazo);
         } else {
-          this.metaLocal(brazo, 0.8 * l, 0.6, 0.5);
+          this.metaColgando(brazo);
         }
       }, this);
+    }
+
+    // El brazo libre cuelga por su peso, con el codo un poco doblado y algo atrasado.
+    metaColgando(brazo) {
+      brazo.meta.copy(brazo.hombro);
+      brazo.meta.x += limitar(-this.velocidad.x * 0.09, -0.55, 0.55) + brazo.lado * 0.12;
+      brazo.meta.y -= ALCANCE * 0.96;
+      brazo.meta.z += 0.22;
     }
 
     metaColgado(brazo, t) {
@@ -664,17 +719,36 @@
       if (!agarrada) brazo.pos.copy(mano);
 
       const alto = Math.sqrt(Math.max(0, LARGO_BRAZO * LARGO_BRAZO - (distancia / 2) * (distancia / 2)));
-      const codo = brazo.codo.position;
-      codo.copy(hombro).addScaledVector(hacia, distancia / 2);
-      codo.x += -hacia.y * alto * brazo.lado;
-      codo.y += hacia.x * alto * brazo.lado;
-      codo.z += 0.08;
 
-      const fin = new THREE.Vector3().copy(mano);
-      const inicio = new THREE.Vector3().copy(codo);
-      this.colocarHueso(brazo.superior, hombro, inicio);
-      this.colocarHueso(brazo.inferior, inicio, fin);
-      brazo.palma.position.copy(fin);
+      // El codo se dobla hacia afuera del cuerpo y un poco atrás.
+      const afuera = this.punto2.set(Math.cos(this.rotacion) * brazo.lado, Math.sin(this.rotacion) * brazo.lado, -0.35);
+      afuera.addScaledVector(hacia, -afuera.dot(hacia));
+      if (afuera.lengthSq() < 0.01) afuera.set(0, 0, -1);
+      afuera.normalize();
+
+      const codo = brazo.codo.copy(hombro).addScaledVector(hacia, distancia / 2).addScaledVector(afuera, alto);
+      const fin = this.punto3.copy(mano);
+      this.colocarHueso(brazo.superior, hombro, codo);
+      this.colocarHueso(brazo.inferior, codo, fin);
+      this.dibujarMano(brazo, fin, codo, agarrada, dt);
+    }
+
+    dibujarMano(brazo, fin, codo, agarrada, dt) {
+      // La mano sigue la línea del antebrazo; la izquierda queda como espejo.
+      const eje = this.auxiliar.subVectors(fin, codo).normalize();
+      brazo.mano.position.copy(fin);
+      brazo.mano.quaternion.setFromUnitVectors(ARRIBA, eje);
+      if (brazo.lado < 0) brazo.mano.rotateY(Math.PI);
+
+      const buscando = this.estado === "volar" && this.brazos.indexOf(brazo) === this.mano;
+      const meta = agarrada ? MANO_AGARRA : (buscando ? MANO_ABIERTA : MANO_RELAJADA);
+      brazo.cierre += (meta - brazo.cierre) * mezcla(MANO_RAPIDEZ, dt);
+
+      // Los dedos rodean el bejuco y forman el gancho.
+      brazo.dedos.forEach(function (dedo) {
+        dedo.base.rotation.y = -brazo.cierre * 1.25;
+        dedo.punta.rotation.y = -brazo.cierre * 1.5;
+      });
     }
 
     dibujarPiernasYCola(dt) {
@@ -686,6 +760,11 @@
         pierna.cadera.rotation.z = limitar(-this.pesoPiernas * 0.45, -0.7, 0.7) + 0.08 * pierna.lado;
         pierna.cadera.rotation.x = -recogida - this.colaRecta * 0.3;
         pierna.rodilla.rotation.x = recogida * 1.3 + Math.sin(this.t * 1.2 + i) * 0.05;
+        pierna.pie.rotation.x = -recogida * 0.6;
+        pierna.dedos.forEach(function (dedo) {
+          dedo.base.rotation.x = recogida * 1.1;
+          dedo.punta.rotation.x = recogida * 1.5;
+        });
       }, this);
 
       // La cola se curva hacia atrás del recorrido: hace de contrapeso.

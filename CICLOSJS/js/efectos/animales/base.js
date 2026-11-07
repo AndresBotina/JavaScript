@@ -128,6 +128,31 @@ window.Animales = {};
     return malla(geometria, color);
   }
 
+  // Segmento orgánico para brazos y piernas. perfil: lista de [t, radio], donde t va
+  // de 0 (cerca del cuerpo) a 1 (punta). Mide 1 de largo y va centrado en Y para que
+  // la cinemática inversa lo escale. Opciones:
+  //   solape        cuánto sobrepasa cada extremo, para unir sin bolas en la articulación
+  //   plano         achata el segmento en Z (1 = redondo)
+  //   desdeArriba   largo en unidades: nace en el origen y cuelga hacia -Y, como hueso
+  function extremidad(perfil, color, lados, opciones) {
+    const op = opciones || {};
+    const solape = op.solape || 0;
+    const plano = op.plano || 1;
+    const secciones = perfil.map(function (p) {
+      return [p[0] * (1 + solape * 2) - solape, 0, p[1] * plano, p[1]];
+    });
+    const objeto = molde(secciones, color, lados || 8);
+    if (op.desdeArriba) {
+      objeto.geometry.rotateZ(-Math.PI / 2);
+      objeto.geometry.scale(1, op.desdeArriba, 1);
+    } else {
+      objeto.geometry.rotateZ(Math.PI / 2);
+      objeto.geometry.translate(0, -0.5, 0);
+    }
+    objeto.geometry.computeVertexNormals();
+    return objeto;
+  }
+
   // Devuelve 1 con el ojo abierto y casi 0 mientras parpadea.
   function parpadeo(t, cada) {
     return t % cada < 0.14 ? 0.08 : 1;
@@ -170,5 +195,5 @@ window.Animales = {};
   }
 
   window.Animales.Animal = Animal;
-  window.Animales.util = { COLOR, material, malla, bola, cono, tubo, caja, hueso, ojo, en, giro, molde, parpadeo, girarHacia, membrana };
+  window.Animales.util = { COLOR, material, malla, bola, cono, tubo, caja, hueso, ojo, en, giro, molde, extremidad, parpadeo, girarHacia, membrana };
 })();
