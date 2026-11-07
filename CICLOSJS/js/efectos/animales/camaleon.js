@@ -35,8 +35,16 @@
   const ALTURA_PASO = 0.2;
 
   // Ojos.
-  const SACADA_MIN = 0.1;
-  const SACADA_MAX = 0.15;
+  // Sacadas: la duración crece con el ángulo, entre un mínimo y un máximo.
+  const SACADA_MIN = 0.08;
+  const SACADA_MAX = 0.34;
+  const SACADA_POR_RADIAN = 0.24;
+
+  // Un giro grande se parte: uno largo que llega cerca y una corrección pequeña.
+  const SACADA_DIVIDIR = 0.8;
+  const SACADA_FRACCION = 0.86;
+  const PAUSA_CORRECCION = 0.08;
+
   const PAUSA_EXPLORAR_MIN = 0.7;
   const PAUSA_EXPLORAR_MAX = 2.6;
   const PAUSA_SEGUIR_MIN = 0.16;
@@ -426,6 +434,7 @@
         return {
           lado: lado, centro: centro, eje: eje, reposo: reposo, piel: piel, punta: punta, orientar: orientar,
           adelante: 0, arriba: 0, desdeAdelante: 0, desdeArriba: 0, metaAdelante: 0, metaArriba: 0,
+          finalAdelante: 0, finalArriba: 0, corregir: false,
           duracion: 0, tiempo: 0, pausa: entre(PAUSA_EXPLORAR_MIN, PAUSA_EXPLORAR_MAX), dibujado: null
         };
       }, this);
@@ -956,13 +965,21 @@
       item.metaArriba = limitar(Math.atan2(dir.y, Math.hypot(dir.x, dir.z)), -OJO_VERTICAL, OJO_VERTICAL);
     }
 
-    // Salto rápido hacia la meta; la duración crece un poco con la distancia.
+    // Inicia un salto hacia la meta. Si es muy grande, primero llega solo cerca.
     iniciarSacada(item) {
-      const distancia = Math.hypot(item.metaAdelante - item.adelante, item.metaArriba - item.arriba);
+      let distancia = Math.hypot(item.metaAdelante - item.adelante, item.metaArriba - item.arriba);
+      item.corregir = distancia > SACADA_DIVIDIR;
+      if (item.corregir) {
+        item.finalAdelante = item.metaAdelante;
+        item.finalArriba = item.metaArriba;
+        item.metaAdelante = item.adelante + (item.metaAdelante - item.adelante) * SACADA_FRACCION;
+        item.metaArriba = item.arriba + (item.metaArriba - item.arriba) * SACADA_FRACCION;
+        distancia *= SACADA_FRACCION;
+      }
       item.desdeAdelante = item.adelante;
       item.desdeArriba = item.arriba;
       item.tiempo = 0;
-      item.duracion = SACADA_MIN + (SACADA_MAX - SACADA_MIN) * Math.min(1, distancia);
+      item.duracion = limitar(SACADA_MIN + distancia * SACADA_POR_RADIAN, SACADA_MIN, SACADA_MAX);
     }
 
     actualizarOjos(dt) {
@@ -976,15 +993,16 @@
         const sigue = hayPunto && (fijando || i === guia);
 
         if (item.duracion > 0) {
-          // Arranca de golpe y frena suave.
+          // Acelera y frena suave, sin arrancar de golpe.
           item.tiempo += dt;
           const avance = Math.min(1, item.tiempo / item.duracion);
-          const curva = 1 - Math.pow(1 - avance, 3);
+          const curva = suavizar(avance);
           item.adelante = item.desdeAdelante + (item.metaAdelante - item.desdeAdelante) * curva;
           item.arriba = item.desdeArriba + (item.metaArriba - item.desdeArriba) * curva;
           if (avance >= 1) {
             item.duracion = 0;
-            if (fijando) item.pausa = PAUSA_FIJAR;
+            if (item.corregir) item.pausa = PAUSA_CORRECCION;
+            else if (fijando) item.pausa = PAUSA_FIJAR;
             else if (sigue) item.pausa = entre(PAUSA_SEGUIR_MIN, PAUSA_SEGUIR_MAX);
             else item.pausa = entre(PAUSA_EXPLORAR_MIN, PAUSA_EXPLORAR_MAX);
           }
@@ -995,6 +1013,15 @@
         if (sigue) item.pausa = Math.min(item.pausa, fijando ? PAUSA_FIJAR : PAUSA_SEGUIR_MAX);
         item.pausa -= dt;
         if (item.pausa > 0) return;
+
+        // Corrección pendiente: termina de llegar a la meta original.
+        if (item.corregir && !sigue) {
+          item.metaAdelante = item.finalAdelante;
+          item.metaArriba = item.finalArriba;
+          this.iniciarSacada(item);
+          return;
+        }
+        item.corregir = false;
 
         if (sigue) {
           this.mirarPunto(item, punto);
