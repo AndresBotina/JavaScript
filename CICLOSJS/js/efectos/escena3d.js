@@ -1,86 +1,11 @@
-// Capa visual decorativa, independiente de la lógica de los ejercicios.
-// Además de la escena 3D, maneja el progreso del menú (localStorage, "Listo" y barra)
-// y el resaltado de resultados.
-// escena3d.js — Decoración del sitio: progreso del taller y escena 3D del animal de cada página.
-// No hace parte de los ejercicios. Todo va dentro de una función para que
-// sus variables no choquen con las de ejercicio1.js, ejercicio2.js, etc.
+// Capa visual decorativa, independiente de los ejercicios.
+// escena3d.js — Escena 3D del animal de cada página.
+// Todo va dentro de una función para que sus variables no choquen con las de
+// ejercicio1.js, ejercicio2.js, etc.
 (function () {
-  const CLAVE = "ciclos-cerrados";
-  const TOTAL = 9;
-  const pagina = document.body.dataset.ejercicio || "menu";
-  const esMenu = pagina === "menu";
   const sinMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------- Progreso guardado en el navegador ---------- */
-  function leerCerrados() {
-    try {
-      return JSON.parse(localStorage.getItem(CLAVE)) || [];
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function cerrarCiclo(id) {
-    const cerrados = leerCerrados();
-    if (cerrados.indexOf(id) !== -1) return;
-    cerrados.push(id);
-    try {
-      localStorage.setItem(CLAVE, JSON.stringify(cerrados));
-    } catch (error) {
-      // Sin almacenamiento la página sigue funcionando, solo no recuerda.
-    }
-  }
-
-  function pintarMenu() {
-    const cerrados = leerCerrados();
-    let cuenta = 0;
-    document.querySelectorAll("[data-ciclo]").forEach(function (enlace) {
-      if (cerrados.indexOf(enlace.dataset.ciclo) !== -1) {
-        enlace.classList.add("hecho");
-        enlace.querySelector(".estado").textContent = "Listo";
-        cuenta++;
-      }
-    });
-    document.getElementById("progresoNumero").textContent = cuenta + "/" + TOTAL;
-    document.getElementById("progresoBarra").style.width = (cuenta / TOTAL) * 100 + "%";
-    return cuenta;
-  }
-
-  const completados = esMenu ? pintarMenu() : 0;
-
-  /* ---------- Reacción al enviar un formulario ---------- */
-  let esperandoResultado = false;
-  let alEnviar = function () {};
-
-  document.addEventListener("submit", function () {
-    esperandoResultado = true;
-    alEnviar();
-  }, true);
-
-  // Observa #resultado sin tocar el código del ejercicio.
-  const resultado = document.getElementById("resultado");
-  if (resultado) {
-    const anteriores = new Map();
-    const valores = resultado.querySelectorAll("strong");
-    valores.forEach(function (valor) { anteriores.set(valor, valor.textContent); });
-
-    new MutationObserver(function () {
-      let hayDatos = false;
-      valores.forEach(function (valor) {
-        if (valor.textContent !== "—") hayDatos = true;
-        if (valor.textContent !== anteriores.get(valor)) {
-          anteriores.set(valor, valor.textContent);
-          valor.classList.remove("recien");
-          void valor.offsetWidth;
-          valor.classList.add("recien");
-        }
-      });
-      if (esperandoResultado && hayDatos) {
-        cerrarCiclo(pagina);
-        esperandoResultado = false;
-      }
-    }).observe(resultado, { childList: true, subtree: true, characterData: true });
-  }
+  // Si progreso.js no está, la serpiente solo se queda con su largo inicial.
+  const progreso = window.Progreso || { completados: 0, total: 1 };
 
   /* ---------- Escena Three.js ---------- */
   // El animal de cada página se elige con data-animal en el HTML.
@@ -138,8 +63,8 @@
     escena: escena,
     raton: raton,
     sinMovimiento: sinMovimiento,
-    completados: completados,
-    total: TOTAL
+    completados: progreso.completados,
+    total: progreso.total
   });
 
   /* ---------- Animación ---------- */
@@ -180,9 +105,9 @@
   }
 
   // Al enviar el formulario cada animal reacciona a su manera.
-  alEnviar = function () {
+  document.addEventListener("submit", function () {
     if (!sinMovimiento) animal.reaccionar();
-  };
+  }, true);
 
   window.addEventListener("pointermove", function (evento) {
     raton.x = evento.clientX / window.innerWidth - 0.5;

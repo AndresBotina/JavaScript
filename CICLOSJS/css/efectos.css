@@ -1,4 +1,4 @@
-/* efectos.css — Capa visual decorativa: escena 3D y resaltado de resultados.
+/* efectos.css — Capa visual decorativa: escena 3D.
    Se carga después de estilos.css. */
 
 /* ---------- Escena 3D ---------- */
@@ -12,15 +12,6 @@
 #escena3d canvas { display: block; width: 100%; height: 100%; }
 
 header > *:not(#escena3d) { position: relative; z-index: 1; }
-
-/* ---------- Resaltado de resultados nuevos ---------- */
-
-.recien { animation: tinta 0.9s ease-out; }
-
-@keyframes tinta {
-  0% { background: var(--rojo); color: #fff; }
-  100% { background: transparent; }
-}
 
 /* ---------- Menú principal ---------- */
 

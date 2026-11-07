@@ -310,6 +310,13 @@ button:active { transform: scale(0.98); }
 
 #resultado li { padding: 3px 0; }
 
+.recien { animation: tinta 0.9s ease-out; }
+
+@keyframes tinta {
+  0% { background: var(--rojo); color: #fff; }
+  100% { background: transparent; }
+}
+
 /* ---------- Anterior / siguiente ---------- */
 
 .pasos {
