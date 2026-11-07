@@ -3,7 +3,7 @@
 // y caza el cursor con la lengua. La piel es un shader que cambia cara por cara.
 (function () {
   const { Animal, util } = window.Animales;
-  const { COLOR, material, malla, bola, cono, tubo, caja, ojo, en, giro, molde } = util;
+  const { COLOR, material, malla, bola, cono, tubo, caja, ojo, en, giro, molde, extremidad } = util;
 
   // Colores del shader de piel.
   const PIEL_OSCURO = 0x4f0710;
@@ -101,6 +101,17 @@
     { x: -0.92, y: -0.3, z: 0.24, lado: 1, turno: 1 },
     { x: -0.92, y: -0.3, z: -0.24, lado: -1, turno: 0 }
   ];
+
+  // Perfiles de las patas: [t, radio], del cuerpo hacia la punta.
+  const PERFIL_MUSLO = [[0, 0.08], [0.08, 0.155], [0.34, 0.18], [0.7, 0.135], [0.93, 0.105], [1, 0.06]];
+  const PERFIL_PANTORRILLA = [[0, 0.06], [0.08, 0.11], [0.34, 0.12], [0.74, 0.085], [0.95, 0.07], [1, 0.05]];
+  const PERFIL_DEDO = [[0, 0.04], [0.2, 0.055], [0.75, 0.045], [1, 0.024]];
+  const SOLAPE = 0.08;
+
+  // Dedos de la pinza: ángulos para rodear la rama, y cuánto se abren al pisar.
+  const PINZA_SALIDA = 1.15;
+  const PINZA_CURVA = 0.75;
+  const PINZA_ABRE = 0.5;
 
   // Perfiles: [x, y, ancho, alto]. El cuerpo es mucho más alto que ancho.
   const TORSO = [
@@ -544,9 +555,9 @@
           cadera: new THREE.Vector3(dato.x, dato.y, dato.z),
           lado: dato.lado,
           turno: dato.turno,
-          muslo: this.conPiel(tubo(0.13, 0.095, 1, COLOR.rojo, 7), s, s),
-          tibia: this.conPiel(tubo(0.095, 0.07, 1, COLOR.rojo, 7), s + 0.03, s + 0.03),
-          rodilla: this.conPiel(bola(0.11, COLOR.rojo), s + 0.01, s + 0.01),
+          muslo: this.conPiel(extremidad(PERFIL_MUSLO, COLOR.rojo, 9, { solape: SOLAPE }), s, s),
+          tibia: this.conPiel(extremidad(PERFIL_PANTORRILLA, COLOR.rojo, 9, { solape: SOLAPE }), s + 0.03, s + 0.03),
+          rodilla: new THREE.Vector3(),
           pinza: new THREE.Group(),
           dedos: [],
           pie: new THREE.Vector3(),
@@ -556,21 +567,35 @@
           mundo: new THREE.Vector3()
         };
 
-        // Dos dedos opuestos que abrazan la rama.
-        this.conPiel(en(pata.pinza, bola(0.12, COLOR.rojo, [1.1, 0.7, 1])), s + 0.05, s + 0.05, 0.9);
+        // Pinza: dos grupos de dedos opuestos que abrazan la rama.
+        this.conPiel(en(pata.pinza, bola(0.12, COLOR.rojo, [1.15, 0.45, 1.05])), s + 0.05, s + 0.05, 0.92);
         [-1, 1].forEach(function (cara) {
-          const dedo = giro(pata.pinza, 0, 0, 0.05 * cara);
-          const pieza = tubo(0.055, 0.03, 0.22, COLOR.vino, 5);
-          pieza.geometry.translate(0, -0.11, 0);
-          en(dedo, this.conPiel(pieza, s + 0.06, s + 0.06, 0.75));
-          pata.dedos.push({ dedo: dedo, cara: cara });
+          [-1, 1].forEach(function (costado) {
+            pata.dedos.push(this.crearDedo(pata.pinza, costado * 0.06, cara, s));
+          }, this);
         }, this);
 
-        pata.rodilla.scale.setScalar(ESCALA);
         pata.pinza.scale.setScalar(ESCALA);
-        this.ctx.escena.add(pata.muslo, pata.tibia, pata.rodilla, pata.pinza);
+        this.ctx.escena.add(pata.muslo, pata.tibia, pata.pinza);
         return pata;
       }, this);
+    }
+
+    // Dedo de tres segmentos con uña, que sale hacia un lado de la rama.
+    crearDedo(padre, x, cara, s) {
+      const segmento = function (contenedor, largo, tono) {
+        const pieza = extremidad(PERFIL_DEDO, COLOR.rojo, 6, { desdeArriba: largo });
+        en(contenedor, this.conPiel(pieza, s + 0.06, s + 0.06, tono));
+      }.bind(this);
+
+      const uno = giro(padre, x, 0, cara * 0.03);
+      segmento(uno, 0.14, 0.95);
+      const dos = giro(uno, 0, -0.12, 0);
+      segmento(dos, 0.14, 0.88);
+      const tres = giro(dos, 0, -0.12, 0);
+      segmento(tres, 0.11, 0.8);
+      en(tres, cono(0.02, 0.07, COLOR.crema, 4), 0, -0.12, 0).rotation.x = Math.PI;
+      return { uno: uno, dos: dos, tres: tres, cara: cara };
     }
 
     crearLengua() {
@@ -904,16 +929,19 @@
       const afuera = this.b.set(0, 0.55, pata.lado * this.direccion);
       afuera.addScaledVector(hacia, -afuera.dot(hacia)).normalize();
 
-      const rodilla = pata.rodilla.position;
+      const rodilla = pata.rodilla;
       rodilla.copy(cadera).addScaledVector(hacia, base).addScaledVector(afuera, alto);
       this.colocarHueso(pata.muslo, cadera, rodilla);
       this.colocarHueso(pata.tibia, rodilla, pata.pie);
 
       pata.pinza.position.copy(pata.pie);
       pata.pinza.rotation.z = pendiente(pata.pie.x);
-      const abierta = pata.avance < 1 ? Math.sin(pata.avance * Math.PI) * 0.8 : 0;
+      const abierta = pata.avance < 1 ? Math.sin(pata.avance * Math.PI) : 0;
       pata.dedos.forEach(function (item) {
-        item.dedo.rotation.x = item.cara * (0.42 + abierta);
+        item.uno.rotation.x = -item.cara * (PINZA_SALIDA + abierta * PINZA_ABRE * 0.6);
+        const curva = item.cara * PINZA_CURVA * (1 - abierta * PINZA_ABRE);
+        item.dos.rotation.x = curva;
+        item.tres.rotation.x = curva;
       });
     }
 
