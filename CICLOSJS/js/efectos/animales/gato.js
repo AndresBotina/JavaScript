@@ -1,34 +1,19 @@
 // Capa visual decorativa, independiente de los ejercicios.
-// gato.js — Ejercicio 5. Guardián con rutina: reposa, se echa panza arriba, se estira,
-// se acicala y bosteza. Sentado vigila el mouse y reacciona al enviar el formulario.
+// gato.js — Ejercicio 5. Guardián sentado: vigila el mouse, mueve las orejas y de vez en
+// cuando se lame una pata. Reacciona al enviar el formulario.
 (function () {
   const { Animal, util } = window.Animales;
   const { COLOR, bola, cono, tubo, caja, hueso, en, giro } = util;
 
-  // Rutina: tiempo sentado entre comportamientos y probabilidad de cada uno.
-  const REPOSO_MIN = 5;
-  const REPOSO_MAX = 9;
-  const PROBABILIDADES = { panza: 0.4, estirar: 0.2, acicalar: 0.2, bostezo: 0.2 };
+  // Tiempo sentado entre un lamido de pata y el siguiente.
+  const REPOSO_MIN = 8;
+  const REPOSO_MAX = 15;
 
   // Duraciones en segundos.
-  const PANZA_ECHARSE = 1.8;
-  const PANZA_RODAR = 1.7;
-  const PANZA_MANTENER_MIN = 5;
-  const PANZA_MANTENER_MAX = 8;
-  const PANZA_VOLVER_RODAR = 1.5;
-  const PANZA_INCORPORARSE = 1.9;
-  const ESTIRAR_GIRAR = 1.6;
-  const ESTIRAR_BAJAR = 1.7;
-  const ESTIRAR_MANTENER = 2.2;
-  const ESTIRAR_SUBIR = 1.5;
-  const ESTIRAR_VOLVER = 1.6;
   const ACICALAR_SUBIR = 1.3;
   const ACICALAR_MANTENER_MIN = 3;
   const ACICALAR_MANTENER_MAX = 5;
   const ACICALAR_BAJAR = 1.2;
-  const BOSTEZO_ABRIR = 1.5;
-  const BOSTEZO_MANTENER = 1.3;
-  const BOSTEZO_CERRAR = 1.3;
   const REACCION_INTERRUMPIR = 1;
   const REACCION_MANTENER = 1.1;
   const REACCION_VOLVER = 0.9;
@@ -42,7 +27,6 @@
   const OREJA_MIN = 3;
   const OREJA_MAX = 8;
   const OREJA_DURACION = 0.45;
-  const AMASAR_VELOCIDAD = 3;
   const LAMER_VELOCIDAD = 5.5;
   const MIRADA_VELOCIDAD = 3.6;
 
@@ -50,44 +34,18 @@
   const REPOSO = {
     giro: -0.28, inclinar: 0, cabeceo: 0, rodar: 0, bajar: 0,
     hombro0: 0, codo0: 0, hombro1: 0, codo1: 0, cadera: 0, rodilla: -1.4,
-    cabezaX: 0, cabezaY: 0, cabezaZ: 0, cuello: 0, levantarCabeza: 0, boca: 0, ojos: 1, orejasAtras: 0,
+    cabezaX: 0, cabezaY: 0, cabezaZ: 0, cuello: 0, boca: 0, ojos: 1, orejasAtras: 0,
     colaCentro: 0, colaCurva: 1, colaAlza: 0,
-    mirada: 1, amasar: 0, lamer: 0, alerta: 0
+    mirada: 1, lamer: 0, alerta: 0
   };
 
   function pose(cambios) {
     return Object.assign({}, REPOSO, cambios);
   }
 
-  const DE_LADO = pose({
-    giro: 0, inclinar: -Math.PI / 2, bajar: -0.1, mirada: 0,
-    hombro0: -0.5, hombro1: -0.5, codo0: -0.4, codo1: -0.4, cadera: -0.3,
-    colaCentro: 1, colaCurva: 0.35
-  });
-
-  const PANZA_ARRIBA = pose({
-    giro: 0, inclinar: -Math.PI / 2, rodar: -Math.PI / 2, bajar: -0.6, mirada: 0,
-    hombro0: -1.25, hombro1: -1.25, codo0: -0.95, codo1: -0.95, cadera: -0.55, rodilla: -1.1,
-    cabezaY: 1.1, ojos: 0.55, colaCentro: 1, colaCurva: 0.35
-  });
-
-  const PANZA_AMASANDO = Object.assign({}, PANZA_ARRIBA, { amasar: 1 });
-
-  const DE_PERFIL = pose({ giro: -1.25, mirada: 0 });
-
-  const ESTIRADO = pose({
-    giro: -1.25, cabeceo: 1.72, bajar: -0.33, mirada: 0,
-    hombro0: -3.25, hombro1: -3.25, codo0: 0.05, codo1: 0.05, cadera: -1.72, rodilla: -0.05,
-    cabezaX: -1.45, levantarCabeza: 0.75, colaAlza: 0.9, colaCurva: 0.5, ojos: 0.5, orejasAtras: 0.4
-  });
-
   const LAMIENDO = pose({
     mirada: 0, cabeceo: 0.08, hombro1: -2.1, codo1: -1.75,
     cabezaX: 0.34, cabezaY: 0.2, cabezaZ: 0.18, boca: 0.22, ojos: 0.45, lamer: 1
-  });
-
-  const BOSTEZANDO = pose({
-    mirada: 0, cabezaX: -0.16, cuello: 0.2, boca: 1, ojos: 0.08, orejasAtras: 0.5
   });
 
   const ALERTA = pose({ alerta: 1, cabezaX: -0.08 });
@@ -113,7 +71,6 @@
       this.paso = null;
       this.tiempoPaso = 0;
       this.comportamiento = null;
-      this.anterior = null;
       this.esperaReposo = entre(REPOSO_MIN, REPOSO_MAX);
 
       this.miradaX = 0;
@@ -214,51 +171,18 @@
       this.pasos.push({ pose: destino, duracion: duracion });
     }
 
-    pasosDe(nombre) {
-      if (nombre === "panza") {
-        this.irA(DE_LADO, PANZA_ECHARSE);
-        this.irA(PANZA_ARRIBA, PANZA_RODAR);
-        this.irA(PANZA_AMASANDO, 0.9);
-        this.irA(PANZA_AMASANDO, entre(PANZA_MANTENER_MIN, PANZA_MANTENER_MAX));
-        this.irA(DE_LADO, PANZA_VOLVER_RODAR);
-        this.irA(REPOSO, PANZA_INCORPORARSE);
-      } else if (nombre === "estirar") {
-        this.irA(DE_PERFIL, ESTIRAR_GIRAR);
-        this.irA(ESTIRADO, ESTIRAR_BAJAR);
-        this.irA(ESTIRADO, ESTIRAR_MANTENER);
-        this.irA(DE_PERFIL, ESTIRAR_SUBIR);
-        this.irA(REPOSO, ESTIRAR_VOLVER);
-      } else if (nombre === "acicalar") {
-        this.irA(LAMIENDO, ACICALAR_SUBIR);
-        this.irA(LAMIENDO, entre(ACICALAR_MANTENER_MIN, ACICALAR_MANTENER_MAX));
-        this.irA(REPOSO, ACICALAR_BAJAR);
-      } else {
-        this.irA(BOSTEZANDO, BOSTEZO_ABRIR);
-        this.irA(BOSTEZANDO, BOSTEZO_MANTENER);
-        this.irA(REPOSO, BOSTEZO_CERRAR);
-      }
-    }
-
-    elegirComportamiento() {
-      const opciones = Object.keys(PROBABILIDADES).filter(function (nombre) {
-        return nombre !== this.anterior;
-      }, this);
-      let total = 0;
-      opciones.forEach(function (nombre) { total += PROBABILIDADES[nombre]; });
-      let azar = Math.random() * total;
-      for (let i = 0; i < opciones.length; i++) {
-        azar -= PROBABILIDADES[opciones[i]];
-        if (azar <= 0) return opciones[i];
-      }
-      return opciones[opciones.length - 1];
+    // Se lame una pata: la sube, la lame un rato y la baja.
+    pasosAcicalar() {
+      this.irA(LAMIENDO, ACICALAR_SUBIR);
+      this.irA(LAMIENDO, entre(ACICALAR_MANTENER_MIN, ACICALAR_MANTENER_MAX));
+      this.irA(REPOSO, ACICALAR_BAJAR);
     }
 
     iniciar(nombre) {
       this.comportamiento = nombre;
-      this.anterior = nombre;
       this.pasos = [];
       this.paso = null;
-      this.pasosDe(nombre);
+      this.pasosAcicalar();
     }
 
     // Cambia de paso desde la pose actual, así nunca hay saltos.
@@ -277,7 +201,7 @@
     avanzarRutina(dt) {
       if (!this.comportamiento) {
         this.esperaReposo -= dt;
-        if (this.esperaReposo <= 0) this.iniciar(this.elegirComportamiento());
+        if (this.esperaReposo <= 0) this.iniciar("acicalar");
         return;
       }
       if (!this.paso) this.siguientePaso();
@@ -343,11 +267,9 @@
     }
 
     dibujarPatas(p, t) {
-      const amasar = p.amasar * 0.3;
       this.delanteras.forEach(function (pata, i) {
-        const onda = Math.sin(t * AMASAR_VELOCIDAD + i * Math.PI);
-        pata.hombro.rotation.x = p["hombro" + i] + onda * amasar;
-        pata.codo.rotation.x = p["codo" + i] + Math.sin(t * AMASAR_VELOCIDAD + i * Math.PI + 0.7) * amasar;
+        pata.hombro.rotation.x = p["hombro" + i];
+        pata.codo.rotation.x = p["codo" + i];
       });
       this.traseras.forEach(function (pata) {
         pata.cadera.rotation.x = p.cadera;
@@ -363,7 +285,6 @@
 
       const lamido = Math.sin(t * LAMER_VELOCIDAD) * 0.1 * p.lamer;
       this.cabeza.position.y = 1.85 + p.cuello;
-      this.cabeza.position.z = 0.14 - p.levantarCabeza;
       this.cabeza.rotation.x = p.cabezaX + this.miradaY * p.mirada + lamido;
       this.cabeza.rotation.y = p.cabezaY + this.miradaX * p.mirada;
       this.cabeza.rotation.z = p.cabezaZ;
