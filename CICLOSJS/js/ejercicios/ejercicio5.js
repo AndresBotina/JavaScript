@@ -52,7 +52,7 @@ function procesarFormulario(evento) {
     mensaje.textContent = "Acceso bloqueado. Se agotaron los 3 intentos.";
   } else {
     let quedan = maximoIntentos - intentosUsados;
-    let palabra = quedan === 1 ? " intento." : " intentos.";
-    mensaje.textContent = "Contraseña incorrecta. Le quedan " + quedan + palabra;
+    let palabra = quedan === 1 ? "queda 1 intento." : "quedan " + quedan + " intentos.";
+    mensaje.textContent = "Contraseña incorrecta. Le " + palabra;
   }
 }

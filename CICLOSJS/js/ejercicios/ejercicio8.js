@@ -59,7 +59,7 @@ function procesarFormulario(evento) {
     mensaje.textContent = "Perdiste. El número secreto era " + numeroSecreto + ".";
   } else {
     let quedan = maximoIntentos - intentos;
-    let palabra = quedan === 1 ? " intento" : " intentos";
-    mensaje.textContent = "Aún no lo adivinas. Te quedan " + quedan + palabra + "; usa las pistas y vuelve a jugar.";
+    let palabra = quedan === 1 ? "queda 1 intento" : "quedan " + quedan + " intentos";
+    mensaje.textContent = "Aún no lo adivinas. Te " + palabra + "; usa las pistas y vuelve a jugar.";
   }
 }
