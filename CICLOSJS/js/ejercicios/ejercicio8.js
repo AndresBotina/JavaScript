@@ -53,11 +53,13 @@ function procesarFormulario(evento) {
   puntosTexto.textContent = puntos;
 
   if (adivino) {
-    mensaje.textContent = "¡Ganaste! Adivinaste el número en " + intentos + " intentos.";
+    let palabra = intentos === 1 ? " intento." : " intentos.";
+    mensaje.textContent = "¡Ganaste! Adivinaste el número en " + intentos + palabra;
   } else if (intentos === maximoIntentos) {
     mensaje.textContent = "Perdiste. El número secreto era " + numeroSecreto + ".";
   } else {
     let quedan = maximoIntentos - intentos;
-    mensaje.textContent = "Aún no lo adivinas. Te quedan " + quedan + " intentos; usa las pistas y vuelve a jugar.";
+    let palabra = quedan === 1 ? " intento" : " intentos";
+    mensaje.textContent = "Aún no lo adivinas. Te quedan " + quedan + palabra + "; usa las pistas y vuelve a jugar.";
   }
 }
