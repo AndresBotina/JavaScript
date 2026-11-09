@@ -16,7 +16,7 @@ btnAgregar.addEventListener("click", function() {
         inputNombre.style.backgroundColor = "yellow"
     } else if (listaNombres.includes(nombre)) {
         alert("Ese nombre ya está registrado");
-        inputNombre.style.backgroundColor = "yellow"
+        inputNombre.style.backgroundColor = "red"
     } else {
         listaNombres.push(nombre);
         mostrarNombres();

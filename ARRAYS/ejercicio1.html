@@ -2,17 +2,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de nombres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/ejercicio1.css">
 </head>
 <body>
-    <h1>Registro de nombres</h1>
+    <!-- Decoración espacial: no afecta el ejercicio -->
+    <div class="estrellas" aria-hidden="true"></div>
+    <div class="planeta-anillos" aria-hidden="true"></div>
+    <div class="luna" aria-hidden="true"></div>
+    <div class="ovni" aria-hidden="true">
+        <div class="alien"></div>
+        <div class="rayo"></div>
+    </div>
 
-    <input type="text" id="nombre" placeholder="Ingrese un nombre">
-    <button id="btnAgregar">Agregar</button>
+    <main class="nave">
+        <h1>Registro de nombres</h1>
 
-    <h2>Personas registradas</h2>
-    <ul id="lista"></ul>
-    <p id="cantidad"></p>
+        <input type="text" id="nombre" placeholder="Ingrese un nombre">
+        <button id="btnAgregar">Agregar</button>
+
+        <h2>Personas registradas</h2>
+        <ul id="lista"></ul>
+        <p id="cantidad"></p>
+    </main>
 
     <script src="js/ejercicio1.js"></script>
 </body>
