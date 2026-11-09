@@ -11,10 +11,18 @@ let cantidad = document.getElementById("cantidad");
 btnAgregar.addEventListener("click", function() {
     let nombre = inputNombre.value.trim();
 
+    // Revisa si el nombre ya existe, sin importar mayúsculas o minúsculas.
+    let repetido = false;
+    for (let i = 0; i < listaNombres.length; i++) {
+        if (listaNombres[i].toLowerCase() === nombre.toLowerCase()) {
+            repetido = true;
+        }
+    }
+
     if (nombre === "") {
         alert("Ingrese un nombre");
         inputNombre.style.backgroundColor = "yellow"
-    } else if (listaNombres.includes(nombre)) {
+    } else if (repetido) {
         alert("Ese nombre ya está registrado");
         inputNombre.style.backgroundColor = "red"
     } else {
