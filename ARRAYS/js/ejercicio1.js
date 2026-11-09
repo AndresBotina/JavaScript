@@ -12,12 +12,7 @@ btnAgregar.addEventListener("click", function() {
     let nombre = inputNombre.value.trim();
 
     // Revisa si el nombre ya existe, sin importar mayúsculas o minúsculas.
-    let repetido = false;
-    for (let i = 0; i < listaNombres.length; i++) {
-        if (listaNombres[i].toLowerCase() === nombre.toLowerCase()) {
-            repetido = true;
-        }
-    }
+    let repetido = listaNombres.some(n => n.toLowerCase() === nombre.toLowerCase());
 
     if (nombre === "") {
         alert("Ingrese un nombre");
