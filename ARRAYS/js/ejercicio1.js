@@ -9,12 +9,12 @@ let cantidad = document.getElementById("cantidad");
 
 // Evento del botón.
 btnAgregar.addEventListener("click", function() {
-    let nombre = inputNombre.value.trim();
+    let nombre = inputNombre.value.trim().toUpperCase();
 
     // Revisa si el nombre ya existe, sin importar mayúsculas o minúsculas.
     let repetido = false;
     for (let i = 0; i < listaNombres.length; i++) {
-        if (listaNombres[i].toLowerCase() === nombre.toLowerCase()) {
+        if (listaNombres[i] === nombre) {
             repetido = true;
         }
     }
