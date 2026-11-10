@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de productos</title>
+</head>
+<body>
+    <h1>Inventario de productos</h1>
+
+    <form id="formulario">
+        <label for="producto">Nombre del producto:</label>
+        <input type="text" id="producto" required>
+
+        <label for="precio">Precio unitario:</label>
+        <input type="number" id="precio" min="0" step="any" required>
+
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" min="1" step="1" required>
+
+        <button type="submit" id="btnAgregar">Agregar producto</button>
+    </form>
+
+    <h2>Productos registrados</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla"></tbody>
+    </table>
+
+    <h2>Resultados</h2>
+    <p id="total"></p>
+    <p id="productoMayor"></p>
+
+    <script src="js/ejercicio3.js"></script>
+</body>
+</html>
