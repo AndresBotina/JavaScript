@@ -2,41 +2,56 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de productos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/ejercicio3.css">
 </head>
 <body>
-    <h1>Inventario de productos</h1>
+    <!-- Decoración espacial: no afecta el ejercicio -->
+    <div class="estrellas" aria-hidden="true"></div>
+    <div class="planeta-anillos" aria-hidden="true"></div>
+    <div class="luna" aria-hidden="true"></div>
+    <div class="ovni" aria-hidden="true">
+        <div class="alien"></div>
+        <div class="rayo"></div>
+    </div>
 
-    <form id="formulario">
-        <label for="producto">Nombre del producto:</label>
-        <input type="text" id="producto" required>
+    <main class="nave">
+        <h1>Inventario de productos</h1>
 
-        <label for="precio">Precio unitario:</label>
-        <input type="number" id="precio" min="0" step="any" required>
+        <form id="formulario">
+            <label for="producto">Nombre del producto:</label>
+            <input type="text" id="producto" required>
 
-        <label for="cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" min="1" step="1" required>
+            <label for="precio">Precio unitario:</label>
+            <input type="number" id="precio" min="0" step="any" required>
 
-        <button type="submit" id="btnAgregar">Agregar producto</button>
-    </form>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" min="1" step="1" required>
 
-    <h2>Productos registrados</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Precio unitario</th>
-                <th>Cantidad</th>
-                <th>Subtotal</th>
+            <button type="submit" id="btnAgregar">Agregar producto</button>
+        </form>
 
-            </tr>
-        </thead>
-        <tbody id="tabla"></tbody>
-    </table>
+        <h2>Productos registrados</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
 
-    <h2>Resultados</h2>
-    <p id="total"></p>
+                </tr>
+            </thead>
+            <tbody id="tabla"></tbody>
+        </table>
 
+        <h2>Resultados</h2>
+        <p id="total"></p>
+    </main>
 
     <script src="js/ejercicio3.js"></script>
 </body>
