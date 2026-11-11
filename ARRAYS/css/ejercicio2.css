@@ -1,0 +1,379 @@
+/* ejercicio2.css — Tema espacial rojo: planeta volcánico y alien marciano */
+
+/* ---------- Colores ---------- */
+:root {
+    --espacio: #12060a;
+    --espacio-claro: #2a0d14;
+    --alien: #ff5a5f;
+    --alien-oscuro: #c0262d;
+    --planeta: #ff8a3d;
+    --texto: #ffe9ea;
+    --texto-suave: #d69a9e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ---------- Fondo del universo ---------- */
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 48px 16px;
+    font-family: "Space Grotesk", sans-serif;
+    color: var(--texto);
+    background:
+        radial-gradient(ellipse at 20% 10%, rgba(255, 138, 61, 0.25), transparent 50%),
+        radial-gradient(ellipse at 85% 90%, rgba(255, 90, 95, 0.12), transparent 55%),
+        var(--espacio);
+    overflow-x: hidden;
+}
+
+/* Estrellas hechas con puntos de luz que titilan */
+.estrellas,
+.estrellas::after {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+        radial-gradient(1px 1px at 90px 120px, #fff, transparent),
+        radial-gradient(2px 2px at 160px 60px, #ffd0d0, transparent),
+        radial-gradient(1px 1px at 230px 190px, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 300px 90px, #ffb3a3, transparent);
+    background-size: 340px 240px;
+    animation: titilar 4s ease-in-out infinite alternate;
+}
+
+.estrellas::after {
+    content: "";
+    background-size: 520px 380px;
+    background-position: 140px 90px;
+    animation-delay: 2s;
+}
+
+@keyframes titilar {
+    from { opacity: 0.35; }
+    to   { opacity: 1; }
+}
+
+/* ---------- Planeta con anillos (arriba a la derecha) ---------- */
+.planeta-anillos {
+    position: fixed;
+    top: 6%;
+    right: 6%;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 30% 30%, #ffc9a8, transparent 45%),
+        repeating-linear-gradient(-20deg, #c2410c 0 14px, #ff8a3d 14px 26px, #8f2a06 26px 34px);
+    box-shadow: inset -22px -18px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(255, 138, 61, 0.35);
+    animation: flotar 9s ease-in-out infinite;
+}
+
+.planeta-anillos::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 240px;
+    height: 56px;
+    border-radius: 50%;
+    border: 6px solid rgba(255, 90, 95, 0.55);
+    border-top-color: transparent;
+    transform: translate(-50%, -50%) rotate(-18deg);
+}
+
+/* ---------- Luna con cráteres (abajo a la izquierda) ---------- */
+.luna {
+    position: fixed;
+    bottom: 8%;
+    left: 5%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 30% 35%, rgba(0, 0, 0, 0.25) 0 9px, transparent 10px),
+        radial-gradient(circle at 65% 60%, rgba(0, 0, 0, 0.25) 0 12px, transparent 13px),
+        radial-gradient(circle at 55% 25%, rgba(0, 0, 0, 0.2) 0 5px, transparent 6px),
+        radial-gradient(circle at 35% 30%, #ffd9d9, var(--alien-oscuro));
+    box-shadow: inset -14px -10px 24px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 90, 95, 0.3);
+    animation: flotar 12s ease-in-out infinite reverse;
+}
+
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-14px); }
+}
+
+/* ---------- Ovni con alien ---------- */
+.ovni {
+    position: fixed;
+    top: 14%;
+    left: 8%;
+    width: 120px;
+    height: 34px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: linear-gradient(#c9cfee, #6c7499);
+    box-shadow: 0 0 24px rgba(255, 90, 95, 0.45);
+    animation: patrullar 14s ease-in-out infinite;
+}
+
+/* Cúpula de vidrio */
+.ovni::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    width: 64px;
+    height: 46px;
+    border-radius: 50% 50% 10px 10px;
+    background: rgba(160, 220, 255, 0.25);
+    border: 2px solid rgba(200, 235, 255, 0.5);
+    transform: translateX(-50%);
+}
+
+/* Lucecitas del ovni */
+.ovni::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 14px;
+    height: 6px;
+    background: radial-gradient(circle, var(--alien) 0 3px, transparent 4px) 0 0 / 18px 6px repeat-x;
+    animation: titilar 0.8s steps(2) infinite;
+}
+
+/* El alien dentro de la cúpula */
+.alien {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    width: 34px;
+    height: 38px;
+    border-radius: 50% 50% 45% 45%;
+    background: var(--alien);
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+/* Ojos grandes y negros */
+.alien::before,
+.alien::after {
+    content: "";
+    position: absolute;
+    top: 13px;
+    width: 11px;
+    height: 15px;
+    border-radius: 50%;
+    background: #0b0b14;
+}
+
+.alien::before {
+    left: 4px;
+    transform: rotate(25deg);
+}
+
+.alien::after {
+    right: 4px;
+    transform: rotate(-25deg);
+}
+
+/* Rayo de abducción */
+.rayo {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: 90px;
+    height: 120px;
+    transform: translateX(-50%);
+    clip-path: polygon(35% 0, 65% 0, 100% 100%, 0 100%);
+    background: linear-gradient(rgba(255, 90, 95, 0.45), transparent);
+    animation: titilar 2s ease-in-out infinite alternate;
+}
+
+@keyframes patrullar {
+    0%, 100% { transform: translate(0, 0) rotate(-4deg); }
+    50%      { transform: translate(40px, 18px) rotate(4deg); }
+}
+
+/* ---------- Tarjeta principal (la nave) ---------- */
+.nave {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    margin: 60px auto 0;
+    padding: 36px 32px;
+    border-radius: 24px;
+    background: rgba(42, 13, 20, 0.78);
+    border: 1px solid rgba(255, 90, 95, 0.35);
+    box-shadow: 0 0 0 6px rgba(255, 90, 95, 0.05), 0 20px 60px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    color: var(--alien);
+    text-shadow: 0 0 14px rgba(255, 90, 95, 0.6);
+}
+
+h2 {
+    margin: 32px 0 12px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ---------- Campo y botón ---------- */
+input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 2px solid transparent;
+    background: white;
+    color: #10142e;
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+    border-color: var(--alien);
+    box-shadow: 0 0 16px rgba(255, 90, 95, 0.5);
+}
+
+button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--alien), var(--alien-oscuro));
+    color: #2a0306;
+    font-family: "Orbitron", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 90, 95, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* ---------- Lista: cada nombre es un mundo ---------- */
+#lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#lista li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    animation: aterrizar 0.4s ease-out;
+}
+
+/* Planetita de colores al lado de cada nombre */
+#lista li::before {
+    content: "";
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--planeta) 60%);
+    box-shadow: 0 0 10px rgba(255, 138, 61, 0.6);
+}
+
+#lista li:nth-child(even)::before {
+    background: radial-gradient(circle at 30% 30%, #fff, var(--alien-oscuro) 60%);
+    box-shadow: 0 0 10px rgba(255, 90, 95, 0.6);
+}
+
+@keyframes aterrizar {
+    from { opacity: 0; transform: translateY(-14px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Pantallas pequeñas ---------- */
+@media (max-width: 600px) {
+    .nave {
+        margin-top: 120px;
+        padding: 28px 20px;
+    }
+
+    .planeta-anillos {
+        width: 80px;
+        height: 80px;
+        top: 3%;
+        right: 4%;
+    }
+
+    .planeta-anillos::after {
+        width: 140px;
+        height: 34px;
+        border-width: 4px;
+    }
+
+    .luna {
+        width: 56px;
+        height: 56px;
+    }
+
+    .ovni {
+        top: 60px;
+        left: 4%;
+    }
+}
+
+/* ---------- Partes propias de este ejercicio ---------- */
+label {
+    display: block;
+    margin: 16px 0 6px;
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+}
+
+label:first-child {
+    margin-top: 0;
+}
+
+/* Separar el formulario cuando va después de la lista */
+ul + form {
+    margin-top: 24px;
+}
+
+/* Resultados */
+.nave p {
+    margin: 0 0 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--alien);
+    font-weight: 500;
+}
+
+.nave p:empty {
+    display: none;
+}

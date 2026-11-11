@@ -2,24 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de números</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Grotesk:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/ejercicio2.css">
 </head>
 <body>
-    <h1>Operaciones con arrays</h1>
+    <!-- Decoración espacial: no afecta el ejercicio -->
+    <div class="estrellas" aria-hidden="true"></div>
+    <div class="planeta-anillos" aria-hidden="true"></div>
+    <div class="luna" aria-hidden="true"></div>
+    <div class="ovni" aria-hidden="true">
+        <div class="alien"></div>
+        <div class="rayo"></div>
+    </div>
 
-    <form id="formulario">
-        <input type="number" id="numero" placeholder="Ingrese un número" step="any">
-        <button type="submit" id="btnAgregar">Agregar número</button>
-    </form>
+    <main class="nave">
+        <h1>Operaciones con arrays</h1>
 
-    <h2>Números registrados</h2>
-    <ul id="lista"></ul>
+        <form id="formulario">
+            <input type="number" id="numero" placeholder="Ingrese un número" step="any">
+            <button type="submit" id="btnAgregar">Agregar número</button>
+        </form>
 
-    <h2>Resultados</h2>
-    <p id="suma"></p>
-    <p id="promedio"></p>
-    <p id="mayor"></p>
-    <p id="menor"></p>
+        <h2>Números registrados</h2>
+        <ul id="lista"></ul>
+
+        <h2>Resultados</h2>
+        <p id="suma"></p>
+        <p id="promedio"></p>
+        <p id="mayor"></p>
+        <p id="menor"></p>
+    </main>
 
     <script src="js/ejercicio2.js"></script>
 </body>
