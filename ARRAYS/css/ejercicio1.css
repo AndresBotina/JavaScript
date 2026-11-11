@@ -216,6 +216,24 @@ body {
     backdrop-filter: blur(6px);
 }
 
+/* ---------- Enlace para volver al menú ---------- */
+.volver {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.volver:hover {
+    color: var(--alien);
+    border-color: var(--alien);
+}
+
 h1 {
     margin: 0 0 24px;
     font-family: "Orbitron", sans-serif;
