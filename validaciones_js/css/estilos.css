@@ -1,0 +1,452 @@
+/* =========================================================
+   TEMA MARIPOSA 🦋
+   Colorido, animado y reluciente
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap");
+
+/* ---------- Colores y medidas ---------- */
+:root {
+    --rosa: #ff4fa3;
+    --violeta: #8b5cf6;
+    --turquesa: #22d3ee;
+    --dorado: #fbbf24;
+    --texto: #3b0764;
+    --texto-suave: #7e5a9b;
+    --error: #e11d48;
+    --exito: #10b981;
+    --radio: 16px;
+
+    /* Mariposas dibujadas en SVG (alas, venas, manchas y antenas).
+       Cada una aletea sola gracias a la animación interna del SVG. */
+    --mariposa-rosa: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E %3Cdefs%3E %3CradialGradient id='s' cx='.8' cy='.75' r='.95'%3E%3Cstop offset='0' stop-color='%23fde68a'/%3E%3Cstop offset='.45' stop-color='%23ff4fa3'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/radialGradient%3E %3CradialGradient id='i' cx='.85' cy='.2' r='1'%3E%3Cstop offset='0' stop-color='%23fde68a'/%3E%3Cstop offset='.5' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/radialGradient%3E %3C/defs%3E %3Cg transform='rotate(-12 50 42)'%3E %3Cg%3E%3CanimateTransform attributeName='transform' type='translate' values='0 0;0 -3;0 0' dur='2.4s' repeatCount='indefinite'/%3E %3Cg transform='translate(50 0)'%3E%3Cg%3E %3CanimateTransform attributeName='transform' type='scale' values='1 1;.22 1;1 1' dur='0.42s' repeatCount='indefinite' calcMode='spline' keySplines='.4 0 .6 1;.4 0 .6 1'/%3E %3Cg transform='translate(-50 0)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23ffffff'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23ffffff'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23ffffff'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23ffffff'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23ffffff' fill-opacity='.55'/%3E %3Cg transform='translate(100 0) scale(-1 1)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23ffffff'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23ffffff'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23ffffff'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23ffffff'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23ffffff' fill-opacity='.55'/%3E%3C/g%3E %3C/g%3E%3C/g%3E%3C/g%3E %3Cpath d='M49 28 C46 18 42 12 38 8 M51 28 C54 18 58 12 62 8' stroke='%232e1065' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E %3Ccircle cx='38' cy='8' r='2' fill='%232e1065'/%3E%3Ccircle cx='62' cy='8' r='2' fill='%232e1065'/%3E %3Cellipse cx='50' cy='48' rx='3' ry='18' fill='%232e1065'/%3E %3Ccircle cx='50' cy='29' r='4' fill='%232e1065'/%3E %3Cellipse cx='49' cy='44' rx='1' ry='9' fill='%23fff' fill-opacity='.3'/%3E %3C/g%3E%3C/g%3E%3C/svg%3E");
+    --mariposa-turquesa: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E %3Cdefs%3E %3CradialGradient id='s' cx='.8' cy='.75' r='.95'%3E%3Cstop offset='0' stop-color='%23e0f2fe'/%3E%3Cstop offset='.45' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%231e40af'/%3E%3C/radialGradient%3E %3CradialGradient id='i' cx='.85' cy='.2' r='1'%3E%3Cstop offset='0' stop-color='%23e0f2fe'/%3E%3Cstop offset='.5' stop-color='%23a78bfa'/%3E%3Cstop offset='1' stop-color='%231e40af'/%3E%3C/radialGradient%3E %3C/defs%3E %3Cg transform='rotate(10 50 42)'%3E %3Cg%3E%3CanimateTransform attributeName='transform' type='translate' values='0 0;0 -3;0 0' dur='2.4s' repeatCount='indefinite'/%3E %3Cg transform='translate(50 0)'%3E%3Cg%3E %3CanimateTransform attributeName='transform' type='scale' values='1 1;.22 1;1 1' dur='0.36s' repeatCount='indefinite' calcMode='spline' keySplines='.4 0 .6 1;.4 0 .6 1'/%3E %3Cg transform='translate(-50 0)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23ffffff'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23ffffff'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23ffffff'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23ffffff'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23ffffff' fill-opacity='.55'/%3E %3Cg transform='translate(100 0) scale(-1 1)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23ffffff'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23ffffff'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23ffffff'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23ffffff'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23ffffff' fill-opacity='.55'/%3E%3C/g%3E %3C/g%3E%3C/g%3E%3C/g%3E %3Cpath d='M49 28 C46 18 42 12 38 8 M51 28 C54 18 58 12 62 8' stroke='%232e1065' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E %3Ccircle cx='38' cy='8' r='2' fill='%232e1065'/%3E%3Ccircle cx='62' cy='8' r='2' fill='%232e1065'/%3E %3Cellipse cx='50' cy='48' rx='3' ry='18' fill='%232e1065'/%3E %3Ccircle cx='50' cy='29' r='4' fill='%232e1065'/%3E %3Cellipse cx='49' cy='44' rx='1' ry='9' fill='%23fff' fill-opacity='.3'/%3E %3C/g%3E%3C/g%3E%3C/svg%3E");
+    --mariposa-dorada: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E %3Cdefs%3E %3CradialGradient id='s' cx='.8' cy='.75' r='.95'%3E%3Cstop offset='0' stop-color='%23fef3c7'/%3E%3Cstop offset='.45' stop-color='%23fbbf24'/%3E%3Cstop offset='1' stop-color='%23c2410c'/%3E%3C/radialGradient%3E %3CradialGradient id='i' cx='.85' cy='.2' r='1'%3E%3Cstop offset='0' stop-color='%23fef3c7'/%3E%3Cstop offset='.5' stop-color='%23fb7185'/%3E%3Cstop offset='1' stop-color='%23c2410c'/%3E%3C/radialGradient%3E %3C/defs%3E %3Cg transform='rotate(-4 50 42)'%3E %3Cg%3E%3CanimateTransform attributeName='transform' type='translate' values='0 0;0 -3;0 0' dur='2.4s' repeatCount='indefinite'/%3E %3Cg transform='translate(50 0)'%3E%3Cg%3E %3CanimateTransform attributeName='transform' type='scale' values='1 1;.22 1;1 1' dur='0.48s' repeatCount='indefinite' calcMode='spline' keySplines='.4 0 .6 1;.4 0 .6 1'/%3E %3Cg transform='translate(-50 0)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23fff7ed'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23fff7ed'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23fff7ed'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23fff7ed'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23fff7ed' fill-opacity='.55'/%3E %3Cg transform='translate(100 0) scale(-1 1)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23fff7ed'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23fff7ed'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23fff7ed'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23fff7ed'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23fff7ed' fill-opacity='.55'/%3E%3C/g%3E %3C/g%3E%3C/g%3E%3C/g%3E %3Cpath d='M49 28 C46 18 42 12 38 8 M51 28 C54 18 58 12 62 8' stroke='%232e1065' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E %3Ccircle cx='38' cy='8' r='2' fill='%232e1065'/%3E%3Ccircle cx='62' cy='8' r='2' fill='%232e1065'/%3E %3Cellipse cx='50' cy='48' rx='3' ry='18' fill='%232e1065'/%3E %3Ccircle cx='50' cy='29' r='4' fill='%232e1065'/%3E %3Cellipse cx='49' cy='44' rx='1' ry='9' fill='%23fff' fill-opacity='.3'/%3E %3C/g%3E%3C/g%3E%3C/svg%3E");
+    --mariposa-violeta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 84'%3E %3Cdefs%3E %3CradialGradient id='s' cx='.8' cy='.75' r='.95'%3E%3Cstop offset='0' stop-color='%23fbcfe8'/%3E%3Cstop offset='.45' stop-color='%23c084fc'/%3E%3Cstop offset='1' stop-color='%234c1d95'/%3E%3C/radialGradient%3E %3CradialGradient id='i' cx='.85' cy='.2' r='1'%3E%3Cstop offset='0' stop-color='%23fbcfe8'/%3E%3Cstop offset='.5' stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%234c1d95'/%3E%3C/radialGradient%3E %3C/defs%3E %3Cg transform='rotate(14 50 42)'%3E %3Cg%3E%3CanimateTransform attributeName='transform' type='translate' values='0 0;0 -3;0 0' dur='2.4s' repeatCount='indefinite'/%3E %3Cg transform='translate(50 0)'%3E%3Cg%3E %3CanimateTransform attributeName='transform' type='scale' values='1 1;.22 1;1 1' dur='0.39s' repeatCount='indefinite' calcMode='spline' keySplines='.4 0 .6 1;.4 0 .6 1'/%3E %3Cg transform='translate(-50 0)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23ffffff'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23ffffff'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23ffffff'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23ffffff'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23ffffff' fill-opacity='.55'/%3E %3Cg transform='translate(100 0) scale(-1 1)'%3E %3Cpath d='M50 40 C44 14 22 2 9 9 C-1 15 2 33 16 40 C26 45 40 44 50 43 Z' fill='url(%23s)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 44 C38 45 20 52 19 64 C18 76 32 79 41 70 C47 63 49 54 50 47 Z' fill='url(%23i)' stroke='%232e1065' stroke-width='1.6'/%3E %3Cpath d='M50 41 L14 14 M50 41 L8 26 M50 42 L20 40 M50 46 L24 62 M50 47 L36 72' stroke='%232e1065' stroke-opacity='.35' stroke-width='.8' fill='none'/%3E %3Ccircle cx='13' cy='16' r='2.6' fill='%23ffffff'/%3E %3Ccircle cx='9' cy='25' r='1.8' fill='%23ffffff'/%3E %3Ccircle cx='18' cy='10' r='1.5' fill='%23ffffff'/%3E %3Ccircle cx='25' cy='67' r='2' fill='%23ffffff'/%3E %3Ccircle cx='31' cy='37' r='4' fill='%23ffffff' fill-opacity='.55'/%3E%3C/g%3E %3C/g%3E%3C/g%3E%3C/g%3E %3Cpath d='M49 28 C46 18 42 12 38 8 M51 28 C54 18 58 12 62 8' stroke='%232e1065' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E %3Ccircle cx='38' cy='8' r='2' fill='%232e1065'/%3E%3Ccircle cx='62' cy='8' r='2' fill='%232e1065'/%3E %3Cellipse cx='50' cy='48' rx='3' ry='18' fill='%232e1065'/%3E %3Ccircle cx='50' cy='29' r='4' fill='%232e1065'/%3E %3Cellipse cx='49' cy='44' rx='1' ry='9' fill='%23fff' fill-opacity='.3'/%3E %3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Ángulo animable para el borde brillante de la tarjeta */
+@property --giro {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- Fondo: jardín de colores en movimiento ---------- */
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 16px;
+    font-family: "Quicksand", sans-serif;
+    color: var(--texto);
+    background: linear-gradient(135deg, #ffd6ec, #e9d5ff, #cffafe, #fef3c7, #ffd6ec);
+    background-size: 400% 400%;
+    animation: fondo 18s ease infinite;
+    overflow-x: hidden;
+}
+
+/* ---------- Bandada de mariposas revoloteando ---------- */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 6px 8px rgba(124, 58, 237, 0.3));
+}
+
+/* Primer grupo: 7 mariposas */
+body::before {
+    background-image:
+        var(--mariposa-rosa),
+        var(--mariposa-turquesa),
+        var(--mariposa-dorada),
+        var(--mariposa-violeta),
+        var(--mariposa-rosa),
+        var(--mariposa-turquesa),
+        var(--mariposa-dorada);
+    background-size: 72px, 52px, 62px, 46px, 36px, 34px, 42px;
+    animation: revoloteo1 26s ease-in-out infinite alternate;
+}
+
+/* Segundo grupo: 5 mariposas */
+body::after {
+    background-image:
+        var(--mariposa-violeta),
+        var(--mariposa-rosa),
+        var(--mariposa-turquesa),
+        var(--mariposa-dorada),
+        var(--mariposa-violeta);
+    background-size: 58px, 48px, 66px, 32px, 40px;
+    animation: revoloteo2 34s ease-in-out infinite alternate;
+}
+
+/* ---------- Tarjeta del formulario ---------- */
+.contenedor {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    padding: 56px 36px 36px;
+    border: 3px solid transparent;
+    border-radius: 28px;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)) padding-box,
+        conic-gradient(from var(--giro), var(--rosa), var(--dorado), var(--turquesa), var(--violeta), var(--rosa)) border-box;
+    backdrop-filter: blur(12px);
+    box-shadow:
+        0 20px 50px rgba(139, 92, 246, 0.25),
+        0 0 0 8px rgba(255, 255, 255, 0.35);
+    animation:
+        entrar 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both,
+        borde 6s linear infinite;
+}
+
+/* Mariposa grande que flota encima del título */
+.contenedor::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    width: 96px;
+    height: 81px;
+    margin-left: -48px;
+    background: var(--mariposa-rosa) center / contain no-repeat;
+    filter: drop-shadow(0 10px 12px rgba(255, 79, 163, 0.45));
+    animation: flotar 3s ease-in-out infinite;
+}
+
+/* Mariposa pequeña posada en la esquina de la tarjeta */
+.contenedor::after {
+    content: "";
+    position: absolute;
+    right: -18px;
+    bottom: -22px;
+    width: 54px;
+    height: 46px;
+    background: var(--mariposa-turquesa) center / contain no-repeat;
+    filter: drop-shadow(0 6px 8px rgba(34, 211, 238, 0.45));
+    animation: flotar 4s ease-in-out infinite;
+    animation-delay: -1.5s;
+}
+
+/* ---------- Títulos ---------- */
+h1 {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-size: 2.2rem;
+    line-height: 1.3;
+    padding-bottom: 6px;
+    text-align: center;
+    background: linear-gradient(90deg, var(--rosa), var(--violeta), var(--turquesa), var(--dorado), var(--rosa));
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: brillo 6s linear infinite;
+}
+
+.contenedor > p {
+    margin: 8px 0 28px;
+    text-align: center;
+    color: var(--texto-suave);
+    font-weight: 500;
+}
+
+/* ---------- Grupos de campos ---------- */
+.grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+    animation: entrar 0.6s ease both;
+}
+
+.grupo:nth-child(1) { animation-delay: 0.15s; }
+.grupo:nth-child(2) { animation-delay: 0.25s; }
+.grupo:nth-child(3) { animation-delay: 0.35s; }
+.grupo:nth-child(4) { animation-delay: 0.45s; }
+.grupo:nth-child(5) { animation-delay: 0.55s; }
+.grupo:nth-child(6) { animation-delay: 0.65s; }
+.grupo:nth-child(7) { animation-delay: 0.75s; }
+.grupo:nth-child(8) { animation-delay: 0.85s; }
+.grupo:nth-child(9) { animation-delay: 0.95s; }
+.grupo:nth-child(10) { animation-delay: 1.05s; }
+
+label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--violeta);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 13px 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--texto);
+    background: #fdf8ff;
+    border: 2px solid #ead7ff;
+    border-radius: var(--radio);
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+}
+
+input:hover,
+select:hover {
+    border-color: #d8b4fe;
+}
+
+input:focus,
+select:focus {
+    background: #fff;
+    border-color: var(--rosa);
+    box-shadow: 0 0 0 5px rgba(255, 79, 163, 0.15);
+    transform: translateY(-2px);
+}
+
+select {
+    cursor: pointer;
+}
+
+/* ---------- Mensajes de error ---------- */
+small {
+    min-height: 1.1em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--error);
+}
+
+small:not(:empty) {
+    animation: aparecer 0.3s ease;
+}
+
+small:not(:empty)::before {
+    content: "✿ ";
+}
+
+/* El campo se pinta de rojo cuando su mensaje de error tiene texto */
+.grupo:has(small:not(:empty)) input,
+.grupo:has(small:not(:empty)) select,
+input.error,
+select.error {
+    border-color: var(--error);
+    background: #fff5f7;
+    animation: temblor 0.35s ease;
+}
+
+input.exito,
+select.exito {
+    border-color: var(--exito);
+    background: #f0fdf9;
+}
+
+/* ---------- Términos ---------- */
+.terminos label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--texto-suave);
+    cursor: pointer;
+}
+
+.terminos input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--rosa);
+    cursor: pointer;
+}
+
+/* ---------- Botón reluciente ---------- */
+button {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+    padding: 16px;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--rosa), var(--violeta), var(--turquesa), var(--violeta), var(--rosa));
+    background-size: 300% auto;
+    box-shadow: 0 10px 25px rgba(255, 79, 163, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: brillo 8s linear infinite;
+}
+
+/* Destello que cruza el botón */
+button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transform: skewX(-20deg);
+    animation: destello 3s ease-in-out infinite;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(139, 92, 246, 0.45);
+}
+
+button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button:focus-visible {
+    outline: 3px solid var(--dorado);
+    outline-offset: 3px;
+}
+
+button:disabled {
+    background: #d6cce6;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+    animation: none;
+}
+
+button:disabled::after {
+    display: none;
+}
+
+/* ---------- Mensaje final ---------- */
+#mensajeFinal {
+    margin-top: 18px;
+    text-align: center;
+    font-weight: 700;
+}
+
+#mensajeFinal:not(:empty) {
+    padding: 12px;
+    border-radius: var(--radio);
+    background: #ecfdf5;
+    animation: aparecer 0.4s ease;
+}
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
+@keyframes fondo {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Cada posición de la lista mueve una mariposa del grupo */
+@keyframes revoloteo1 {
+    0% {
+        background-position:
+            5vw 10vh, 85vw 15vh, 10vw 80vh, 80vw 85vh,
+            45vw 3vh, 30vw 90vh, 92vw 45vh;
+    }
+    50% {
+        background-position:
+            15vw 30vh, 75vw 40vh, 25vw 60vh, 90vw 55vh,
+            60vw 8vh, 50vw 88vh, 85vw 5vh;
+    }
+    100% {
+        background-position:
+            8vw 60vh, 88vw 70vh, 18vw 20vh, 70vw 25vh,
+            35vw 5vh, 65vw 92vh, 95vw 30vh;
+    }
+}
+
+@keyframes revoloteo2 {
+    0% {
+        background-position:
+            3vw 45vh, 70vw 5vh, 88vw 88vh, 20vw 40vh, 55vw 95vh;
+    }
+    50% {
+        background-position:
+            12vw 15vh, 92vw 20vh, 75vw 65vh, 8vw 70vh, 40vw 82vh;
+    }
+    100% {
+        background-position:
+            4vw 85vh, 78vw 75vh, 92vw 40vh, 28vw 8vh, 25vw 92vh;
+    }
+}
+
+@keyframes flotar {
+    0%, 100% { translate: 0 0;     rotate: -6deg; }
+    50%      { translate: 0 -10px; rotate: 6deg; }
+}
+
+@keyframes entrar {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes borde {
+    to { --giro: 360deg; }
+}
+
+@keyframes brillo {
+    to { background-position: 300% center; }
+}
+
+@keyframes destello {
+    0%, 60% { left: -60%; }
+    100%    { left: 130%; }
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes temblor {
+    0%, 100% { translate: 0; }
+    25%      { translate: -4px; }
+    75%      { translate: 4px; }
+}
+
+/* ---------- Celulares ---------- */
+@media (max-width: 520px) {
+    .contenedor {
+        padding: 50px 22px 28px;
+        border-radius: 22px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* ---------- Respeto a quien prefiere menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    body::before,
+    body::after {
+        display: none;
+    }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de estudiantes</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <main class="contenedor">
+        <h1>Registro de estudiantes</h1>
+        <p>Complete todos los campos para realizar su registro.</p>
+
+        <form id="formulario">
+
+            <div class="grupo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre">
+                <small id="errorNombre"></small>
+            </div>
+
+            <div class="grupo">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos">
+                <small id="errorApellidos"></small>
+            </div>
+
+            <div class="grupo">
+                <label for="documento">Documento</label>
+                <input type="text" id="documento">
+                <small id="errorDocumento"></small>
+            </div>
+
+            <div class="grupo">
+                <label for="correo">Correo electrónico</label>
+                <input type="text" id="correo">
+                <small id="errorCorreo"></small>
+            </div>
+
+            <button type="submit" id="btnRegistrar">Registrar estudiante</button>
+
+            <p id="mensajeFinal"></p>
+
+        </form>
+    </main>
+
+    <script src="js/validaciones.js"></script>
+</body>
+</html>
