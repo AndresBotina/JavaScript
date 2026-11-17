@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios independientes de LocalStorage</title>
+</head>
+<body>
+    <h1>Ejercicios de LocalStorage</h1>
+
+    <section>
+        <h2>Ejercicio 1. Guardar un nombre</h2>
+        <form id="formGuardar">
+            <label for="nombreGuardar">Nombre:</label>
+            <input id="nombreGuardar" type="text">
+            <small id="errorNombre"></small>
+            <button type="submit">Guardar nombre</button>
+        </form>
+        <p id="resultadoGuardar"></p>
+    </section>
+
+    <section>
+        <h2>Ejercicio 2. Mostrar el nombre guardado</h2>
+        <form id="formMostrar">
+            <button type="submit">Mostrar nombre</button>
+        </form>
+        <p id="resultadoMostrar"></p>
+    </section>
+
+    <section>
+        <h2>Ejercicio 3. Editar el nombre guardado</h2>
+        <form id="formEditar">
+            <label for="nombreEditar">Nuevo nombre:</label>
+            <input id="nombreEditar" type="text">
+            <button type="submit">Actualizar nombre</button>
+        </form>
+        <p id="resultadoEditar"></p>
+    </section>
+
+    <section>
+        <h2>Ejercicio 4. Eliminar el nombre guardado</h2>
+        <form id="formEliminar">
+            <button type="submit">Eliminar nombre</button>
+        </form>
+        <p id="resultadoEliminar"></p>
+    </section>
+
+    <script src="app.js"></script>
+</body>
+</html>
