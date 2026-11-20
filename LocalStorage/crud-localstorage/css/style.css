@@ -1,0 +1,621 @@
+/* =========================================================
+   ARCHIVO CLASIFICADO - CRUD de estudiantes
+   Solo CSS: el HTML y el JS son los de la guía, sin cambios.
+   ========================================================= */
+
+/* Fuentes: máquina de escribir y letras de sello */
+@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Special+Elite&display=swap");
+
+
+/* ---------- 1. VARIABLES ---------- */
+:root {
+    --papel: #f3ead8;
+    --papel-sombra: #e4d6b6;
+    --manila: #d9b77e;
+    --manila-oscuro: #c29b5c;
+    --tinta: #1d1b18;
+    --tinta-suave: #4a4540;
+    --rojo: #b3261e;
+    --resaltador: rgba(255, 226, 60, 0.6);
+    --metal: #8d9298;
+    --madera-1: #3b2618;
+    --madera-2: #2b1b10;
+
+    --letra-maquina: "Special Elite", "Courier New", monospace;
+    --letra-sello: "Black Ops One", Impact, sans-serif;
+
+    --radio: 10px;
+}
+
+/* Número de expediente con tres cifras: 001, 002, 003... */
+@counter-style expediente {
+    system: extends decimal;
+    pad: 3 "0";
+}
+
+
+/* ---------- 2. BASE: EL ESCRITORIO DE MADERA ---------- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    /* Vetas de madera hechas solo con gradientes */
+    background:
+        radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.06), transparent 60%),
+        repeating-linear-gradient(
+            92deg,
+            rgba(0, 0, 0, 0.18) 0 2px,
+            transparent 2px 9px,
+            rgba(255, 255, 255, 0.03) 9px 11px,
+            transparent 11px 23px
+        ),
+        linear-gradient(180deg, var(--madera-1), var(--madera-2));
+    background-color: var(--madera-2);
+}
+
+body {
+    margin: 0 auto;
+    max-width: 1200px;
+    min-height: 100vh;
+    padding: 32px 16px 64px;
+    font-family: var(--letra-maquina);
+    color: var(--tinta);
+
+    /* Celular: todo apilado en una columna */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+    align-content: start;    /* que las filas no se estiren */
+}
+
+
+/* ---------- 3. TÍTULO DE LA PÁGINA ---------- */
+/* El HTML no trae título, así que lo ponemos con pseudo-elementos */
+body::before {
+    content: "EXPEDIENTES · ACCESO RESTRINGIDO";
+    order: -2;
+    grid-column: 1 / -1;
+    font-family: var(--letra-sello);
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    letter-spacing: 0.08em;
+    color: var(--papel);
+    text-align: center;
+    text-shadow: 0 3px 0 rgba(0, 0, 0, 0.5);
+}
+
+body::after {
+    content: "NIVEL DE AUTORIZACIÓN: APRENDIZ";
+    order: -1;               /* lo sube para que quede debajo del título */
+    grid-column: 1 / -1;
+    margin-top: -32px;
+    font-size: 0.95rem;
+    letter-spacing: 0.3em;
+    color: var(--manila);
+    text-align: center;
+}
+
+
+/* ---------- 4. FORMULARIO: CARPETA MANILA ---------- */
+#formulario {
+    position: relative;
+    margin-top: 28px;        /* espacio para la pestaña */
+    padding: 36px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.15), transparent 40%),
+        var(--manila);
+    border-radius: 0 var(--radio) var(--radio) var(--radio);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+    rotate: 0.6deg;
+}
+
+/* Pestaña de la carpeta */
+#formulario::before {
+    content: "ALTA DE AGENTE";
+    position: absolute;
+    top: -28px;
+    left: 0;
+    padding: 6px 22px;
+    font-family: var(--letra-sello);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    background: var(--manila);
+    border-radius: var(--radio) var(--radio) 0 0;
+}
+
+/* Clip de papel: un borde redondeado + un outline por dentro */
+#formulario::after {
+    content: "";
+    position: absolute;
+    top: -18px;
+    right: 34px;
+    width: 20px;
+    height: 62px;
+    border: 3px solid var(--metal);
+    border-radius: 12px;
+    outline: 3px solid var(--metal);
+    outline-offset: -10px;
+    rotate: 8deg;
+}
+
+#formulario label {
+    margin-top: 18px;
+    align-self: flex-start;
+    padding: 0 4px;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: background-size 0.3s;
+    /* El resaltador empieza con ancho 0 */
+    background: linear-gradient(var(--resaltador), var(--resaltador)) no-repeat left center / 0% 70%;
+}
+
+/* Resaltador amarillo cuando su input tiene el foco */
+#formulario label:has(+ input:focus) {
+    background-size: 100% 70%;
+}
+
+/* Inputs como renglón para escribir a máquina */
+#formulario input {
+    width: 100%;
+    padding: 8px 4px;
+    font-family: var(--letra-maquina);
+    font-size: 1.1rem;
+    color: var(--tinta);
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed var(--tinta-suave);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#formulario input:focus {
+    border-bottom-style: solid;
+    border-bottom-color: var(--tinta);
+}
+
+/* Input con error: línea roja y tiembla una vez */
+#formulario input:has(+ small:not(:empty)) {
+    border-bottom-color: var(--rojo);
+    animation: temblar 0.4s;
+}
+
+/* Mensajes de error: ocultos si están vacíos */
+#formulario small:empty {
+    display: none;
+}
+
+/* Con texto, parecen un sello rojo pequeño */
+#formulario small {
+    align-self: flex-start;
+    margin-top: 10px;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--rojo);
+    border: 2px solid var(--rojo);
+    border-radius: 4px;
+    rotate: -2deg;
+    animation: estampar-chico 0.35s ease-out;
+}
+
+/* Botón como sello de goma */
+#btnGuardar {
+    margin-top: 30px;
+    padding: 14px 18px;
+    font-family: var(--letra-sello);
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    background: transparent;
+    border: 4px double var(--rojo);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, scale 0.1s;
+}
+
+#btnGuardar:hover {
+    background: rgba(179, 38, 30, 0.1);
+}
+
+/* Al hacer clic se aplasta como un sello */
+#btnGuardar:active {
+    scale: 0.95;
+}
+
+
+/* ---------- 5. TABLA: HOJA DE EXPEDIENTES ---------- */
+table {
+    position: relative;      /* para ubicar el sello CLASIFICADO */
+    width: 100%;
+    padding: 28px 24px 34px;
+    border-collapse: separate;
+    border-spacing: 0;
+    /* Textura de papel: renglones muy suaves + manchas de luz */
+    background:
+        radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.5), transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(150, 120, 70, 0.15), transparent 50%),
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(29, 27, 24, 0.05) 31px 32px),
+        var(--papel);
+    border-radius: 4px;
+    box-shadow:
+        0 1px 0 var(--papel-sombra),
+        0 18px 35px rgba(0, 0, 0, 0.5);
+    rotate: -0.5deg;
+}
+
+/* Sello rojo CLASIFICADO en la esquina */
+table::after {
+    content: "CLASIFICADO";
+    position: absolute;
+    top: -22px;
+    right: -6px;
+    padding: 6px 14px;
+    font-family: var(--letra-sello);
+    font-size: 1.3rem;
+    letter-spacing: 0.25em;
+    color: var(--rojo);
+    border: 5px double var(--rojo);
+    border-radius: 6px;
+    opacity: 0.8;
+    rotate: 12deg;
+    pointer-events: none;
+    animation: estampar 0.6s ease-out 0.3s both;
+}
+
+/* Encabezados */
+th {
+    padding: 10px 12px;
+    font-family: var(--letra-sello);
+    font-weight: normal;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-align: left;
+    text-transform: uppercase;
+    border-bottom: 3px solid var(--tinta);
+}
+
+/* El thead tiene 4 th y las filas 5 td:
+   esta celda falsa ocupa la columna 5 con el mismo estilo,
+   así "Acciones" se ve cubriendo las dos columnas de botones */
+thead tr::after {
+    content: "";
+    display: table-cell;
+    border-bottom: 3px solid var(--tinta);
+}
+
+/* Contador de expedientes */
+tbody {
+    counter-reset: exp;
+}
+
+tbody tr {
+    counter-increment: exp;
+    transition: background 0.2s;
+}
+
+td {
+    padding: 12px;
+    font-size: 1rem;
+    border-bottom: 1px dashed rgba(29, 27, 24, 0.3);
+    vertical-align: middle;
+    /* Animación de entrada: se "escribe" de izquierda a derecha */
+    animation: escribir 0.6s steps(14) both;
+}
+
+/* Filas escalonadas */
+tbody tr:nth-child(2) td { animation-delay: 0.08s; }
+tbody tr:nth-child(3) td { animation-delay: 0.16s; }
+tbody tr:nth-child(4) td { animation-delay: 0.24s; }
+tbody tr:nth-child(5) td { animation-delay: 0.32s; }
+tbody tr:nth-child(n+6) td { animation-delay: 0.4s; }
+
+/* EXP-001 antes del nombre */
+td:nth-child(1)::before {
+    content: "EXP-" counter(exp, expediente);
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--rojo);
+}
+
+/* Correo censurado con barra negra */
+td:nth-child(2) {
+    word-break: break-all;
+    color: transparent;
+    background: linear-gradient(var(--tinta), var(--tinta)) no-repeat left center / 100% 1.3em;
+    background-origin: content-box;
+    background-clip: content-box;
+    transition: background-size 0.4s, color 0.4s;
+}
+
+/* Se revela al pasar el mouse (o al tocar en celular) */
+tbody tr:hover td:nth-child(2),
+tbody tr:active td:nth-child(2),
+tbody tr:focus-within td:nth-child(2) {
+    color: var(--tinta);
+    background-size: 0% 1.3em;
+}
+
+/* Edad con la palabra AÑOS */
+td:nth-child(3) {
+    white-space: nowrap;
+}
+
+td:nth-child(3)::after {
+    content: " AÑOS";
+    font-size: 0.75rem;
+}
+
+/* Hover: como pasar el dedo por el papel */
+tbody tr:hover {
+    background: rgba(29, 27, 24, 0.06);
+}
+
+/* Botones de acciones: el texto real se esconde (font-size 0)
+   y se muestra uno nuevo con ::after */
+td button {
+    font-size: 0;
+    padding: 7px 12px;
+    background: transparent;
+    border: 2px solid var(--tinta);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+td button::after {
+    font-family: var(--letra-sello);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+td:nth-child(4) button::after {
+    content: "MODIFICAR";
+}
+
+td:nth-child(5) button::after {
+    content: "TRITURAR";
+}
+
+td:nth-child(4) button:hover {
+    color: var(--papel);
+    background: var(--tinta);
+}
+
+td:nth-child(5) button {
+    color: var(--rojo);
+    border-color: var(--rojo);
+}
+
+td:nth-child(5) button:hover {
+    color: var(--papel);
+    background: var(--rojo);
+}
+
+/* TRITURAR: la fila se pone roja, con franjas y tiembla */
+tbody tr:has(td:nth-child(5) button:hover) {
+    background:
+        repeating-linear-gradient(90deg, rgba(179, 38, 30, 0.22) 0 5px, transparent 5px 11px),
+        rgba(179, 38, 30, 0.1);
+    animation: temblar-suave 0.25s infinite;
+}
+
+/* Estado vacío: tbody sin filas.
+   La hoja crece por abajo y el mensaje se ubica en ese espacio
+   (position absolute respecto a la tabla) */
+table:has(#tablaEstudiantes:empty) {
+    padding-bottom: 110px;
+}
+
+#tablaEstudiantes:empty::before {
+    content: "ARCHIVO VACÍO — NINGÚN AGENTE REGISTRADO";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 52px;
+    text-align: center;
+    color: var(--tinta-suave);
+    letter-spacing: 0.05em;
+}
+
+/* Cursor parpadeando */
+#tablaEstudiantes:empty::after {
+    content: "";
+    position: absolute;
+    left: calc(50% - 5px);
+    bottom: 26px;
+    width: 10px;
+    height: 1.1em;
+    background: var(--tinta);
+    animation: parpadear 1s steps(1) infinite;
+}
+
+
+/* ---------- 6. ANIMACIONES ---------- */
+@keyframes estampar {
+    0%   { scale: 3; opacity: 0; }
+    60%  { scale: 0.9; opacity: 0.85; }
+    80%  { scale: 1.05; }
+    100% { scale: 1; opacity: 0.8; }
+}
+
+@keyframes estampar-chico {
+    0%   { scale: 1.8; opacity: 0; }
+    70%  { scale: 0.95; opacity: 1; }
+    100% { scale: 1; }
+}
+
+@keyframes temblar {
+    0%, 100% { translate: 0; }
+    20%      { translate: -6px; }
+    40%      { translate: 6px; }
+    60%      { translate: -4px; }
+    80%      { translate: 4px; }
+}
+
+@keyframes temblar-suave {
+    0%, 100% { translate: 0 0; }
+    25%      { translate: -1px 1px; }
+    75%      { translate: 1px -1px; }
+}
+
+@keyframes escribir {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes parpadear {
+    50% { opacity: 0; }
+}
+
+
+/* ---------- 7. CELULAR (menos de 640px) ---------- */
+@media (max-width: 639px) {
+    #formulario {
+        rotate: 0.3deg;
+    }
+
+    /* La tabla deja de ser tabla: cada fila es una ficha */
+    table,
+    tbody,
+    tbody tr,
+    td {
+        display: block;
+    }
+
+    table {
+        padding: 0;
+        background: none;
+        box-shadow: none;
+        rotate: none;
+    }
+
+    thead {
+        display: none;
+    }
+
+    table::after {
+        top: -30px;
+        right: 4px;
+        font-size: 1rem;
+    }
+
+    tbody tr {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 10px;
+        margin-top: 46px;
+        padding: 18px 16px 16px;
+        background:
+            repeating-linear-gradient(0deg, transparent 0 27px, rgba(29, 27, 24, 0.05) 27px 28px),
+            var(--papel);
+        border-radius: 0 var(--radio) var(--radio) var(--radio);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+        rotate: -0.3deg;
+    }
+
+    tbody tr:nth-child(even) {
+        rotate: 0.3deg;
+    }
+
+    /* Pestaña con el número de expediente */
+    tbody tr::before {
+        content: "EXP-" counter(exp, expediente);
+        position: absolute;
+        top: -30px;
+        left: 0;
+        padding: 6px 18px;
+        font-family: var(--letra-sello);
+        font-size: 0.85rem;
+        letter-spacing: 0.1em;
+        color: var(--rojo);
+        background: var(--papel);
+        border-radius: var(--radio) var(--radio) 0 0;
+    }
+
+    td {
+        grid-column: 1 / -1;
+        padding: 8px 0;
+    }
+
+    /* Etiqueta de cada dato */
+    td::before {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        color: var(--tinta-suave);
+    }
+
+    td:nth-child(1)::before { content: "NOMBRE CLAVE"; color: var(--tinta-suave); }
+    td:nth-child(2)::before { content: "CONTACTO"; }
+    td:nth-child(3)::before { content: "EDAD"; }
+
+    /* La etiqueta del correo no debe quedar censurada */
+    td:nth-child(2) {
+        background-size: 100% 1.3em;
+        background-position: left bottom;
+    }
+
+    td:nth-child(2)::before {
+        color: var(--tinta-suave);
+        margin-bottom: 6px;
+    }
+
+    /* Botones lado a lado abajo */
+    td:nth-child(4),
+    td:nth-child(5) {
+        grid-column: auto;
+        border-bottom: none;
+    }
+
+    td button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    /* En celular la tabla no tiene fondo: el vacío lleva su propia hoja */
+    table:has(#tablaEstudiantes:empty) {
+        padding-bottom: 0;
+    }
+
+    #tablaEstudiantes:empty {
+        position: relative;
+        height: 120px;
+        background: var(--papel);
+        border-radius: var(--radio);
+    }
+}
+
+
+/* ---------- 8. ESCRITORIO (desde 900px) ---------- */
+@media (min-width: 900px) {
+    body {
+        grid-template-columns: minmax(300px, 380px) 1fr;
+        gap: 40px 48px;
+    }
+
+    /* La carpeta se queda fija al hacer scroll */
+    #formulario {
+        position: sticky;
+        top: 50px;
+    }
+}
+
+
+/* ---------- 9. MENOS MOVIMIENTO ---------- */
+/* Si la persona pidió menos animaciones en su sistema */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
