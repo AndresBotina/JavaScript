@@ -52,7 +52,6 @@ formEditar.addEventListener("submit", function (evento) {
         resultadoEditar.textContent = "Escribe el nuevo nombre.";
         return;
     }
-
     localStorage.setItem(claveNombre, nuevoNombre);
     resultadoEditar.textContent = "Nombre actualizado correctamente.";
     formEditar.reset();
