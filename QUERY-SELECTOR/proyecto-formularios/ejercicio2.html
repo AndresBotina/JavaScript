@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de mascotas</title>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Ejercicio 1: Aprendices</a>
+        <a href="ejercicio2.html">Ejercicio 2: Mascotas</a>
+    </nav>
+
+    <h1>Registro de mascotas</h1>
+
+    <form id="formulario">
+        <fieldset>
+            <legend>Información de la mascota</legend>
+            <label>Nombre:
+                <input type="text" name="nombre" required>
+            </label><br><br>
+            <label>Especie:
+                <select name="especie" required>
+                    <option value="">Seleccione</option>
+                    <option>Perro</option>
+                    <option>Gato</option>
+                    <option>Ave</option>
+                    <option>Conejo</option>
+                    <option>Otro</option>
+                </select>
+            </label><br><br>
+            <label>Raza: <input type="text" name="raza"></label><br><br>
+            <span>Sexo:</span>
+            <label><input type="radio" name="sexo" value="Macho"> Macho</label>
+            <label><input type="radio" name="sexo" value="Hembra"> Hembra</label><br><br>
+            <label>Fecha de nacimiento: <input type="date" name="fechaNacimiento"></label><br><br>
+            <label>Edad aproximada: <input type="number" name="edad" min="0"></label><br><br>
+            <label>Color: <input type="text" name="color"></label><br><br>
+            <label>Peso (kg): <input type="number" name="peso" min="0" step="0.1"></label><br><br>
+            <label>Alimentación:
+                <select name="alimentacion">
+                    <option value="">Seleccione</option>
+                    <option>Concentrado</option>
+                    <option>Natural</option>
+                    <option>Mixta</option>
+                </select>
+            </label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Información de salud</legend>
+            <span>¿Tiene vacunas al día?</span>
+            <label><input type="radio" name="vacunas" value="Sí"> Sí</label>
+            <label><input type="radio" name="vacunas" value="No"> No</label><br><br>
+            <span>¿Está esterilizada?</span>
+            <label><input type="radio" name="esterilizada" value="Sí"> Sí</label>
+            <label><input type="radio" name="esterilizada" value="No"> No</label><br><br>
+            <label>Enfermedad: <input type="text" name="enfermedad"></label><br><br>
+            <label>Observaciones: <input type="text" name="observaciones"></label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Información del propietario</legend>
+            <label>Nombre: <input type="text" name="propietario" required></label><br><br>
+            <label>Documento: <input type="number" name="documento"></label><br><br>
+            <label>Correo: <input type="email" name="correo" required></label><br><br>
+            <label>Teléfono: <input type="tel" name="telefono"></label><br><br>
+            <label>Dirección: <input type="text" name="direccion"></label><br><br>
+            <label>Ciudad: <input type="text" name="ciudad"></label>
+        </fieldset>
+
+        <fieldset>
+            <legend>Información adicional</legend>
+            <label>¿Cómo llegó al hogar?
+                <select name="origen">
+                    <option value="">Seleccione</option>
+                    <option>Adopción</option>
+                    <option>Compra</option>
+                    <option>Regalo</option>
+                    <option>Rescate</option>
+                </select>
+            </label><br><br>
+            <span>Servicios de interés:</span><br>
+            <label><input type="checkbox" name="servicios" value="Veterinaria"> Veterinaria</label><br>
+            <label><input type="checkbox" name="servicios" value="Peluquería"> Peluquería</label><br>
+            <label><input type="checkbox" name="servicios" value="Guardería"> Guardería</label><br>
+            <label><input type="checkbox" name="servicios" value="Entrenamiento"> Entrenamiento</label><br><br>
+            <label>
+                <input type="checkbox" name="acepta" value="Sí" required>
+                Acepto el tratamiento de datos
+            </label>
+        </fieldset>
+
+        <br>
+        <button type="submit">Registrar mascota</button>
+        <button type="reset">Limpiar formulario</button>
+    </form>
+
+    <h2>Información registrada</h2>
+    <table border="1">
+        <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
+        <tbody id="resultado"></tbody>
+    </table>
+
+    <script src="JS/app2.js"></script>
+</body>
+</html>
