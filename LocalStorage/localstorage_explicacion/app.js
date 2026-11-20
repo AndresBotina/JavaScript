@@ -79,5 +79,16 @@ formMascota.addEventListener("submit", (event) => {
         edad: Number(document.getElementById("edad").value)
     };
 
+    const resultadoMascota = document.getElementById("resultadoMascota");
+
+    if (mascota.nombre === "" || mascota.raza === "" || document.getElementById("edad").value === "") {
+        resultadoMascota.textContent = "Llena todos los campos.";
+        return;
+    }
+
     localStorage.setItem("mascota", JSON.stringify(mascota));
+
+    const guardada = JSON.parse(localStorage.getItem("mascota"));
+    resultadoMascota.textContent = "Mascota guardada: " + guardada.nombre + ", " + guardada.raza + ", " + guardada.edad + " años";
+    formMascota.reset();
 });
