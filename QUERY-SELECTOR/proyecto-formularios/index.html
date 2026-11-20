@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de aprendices</title>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Ejercicio 1: Aprendices</a>
+        <a href="ejercicio2.html">Ejercicio 2: Mascotas</a>
+    </nav>
+
+    <h1>Registro de aprendices</h1>
+
+    <form id="formulario">
+        <label>Nombre completo:
+            <input type="text" name="nombre" required>
+        </label>
+        <br><br>
+
+        <label>Correo electrónico:
+            <input type="email" name="correo" required>
+        </label>
+        <br><br>
+
+        <label>Documento:
+            <input type="number" name="documento" required>
+        </label>
+        <br><br>
+
+        <label>Teléfono:
+            <input type="tel" name="telefono" required>
+        </label>
+        <br><br>
+
+        <label>Fecha de nacimiento:
+            <input type="date" name="fecha" required>
+        </label>
+        <br><br>
+
+        <label>Programa de formación:
+            <select name="programa" required>
+                <option value="">Seleccione</option>
+                <option value="ADSO">ADSO</option>
+                <option value="Multimedia">Multimedia</option>
+                <option value="Redes">Redes</option>
+            </select>
+        </label>
+        <br><br>
+
+        <span>Jornada:</span>
+        <label><input type="radio" name="jornada" value="Diurna" required> Diurna</label>
+        <label><input type="radio" name="jornada" value="Nocturna"> Nocturna</label>
+        <br><br>
+
+        <label>
+            <input type="checkbox" name="acepta" required>
+            Acepto el tratamiento de datos
+        </label>
+        <br><br>
+
+        <button type="submit">Registrar</button>
+        <button type="reset">Limpiar</button>
+    </form>
+
+    <hr>
+    <h2>Información registrada</h2>
+    <div id="resultado"></div>
+
+    <script src="JS/app.js"></script>
+</body>
+</html>
