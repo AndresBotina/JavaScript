@@ -10,21 +10,20 @@
 
     <section>
         <h2>Ejercicio 1. Guardar un nombre</h2>
-        <form id="formGuardar">
-            <label for="nombreGuardar">Nombre:</label>
-            <input id="nombreGuardar" type="text">
-            <small id="errorNombre"></small>
-            <button type="submit">Guardar nombre</button>
+        <form action="">
+            <label for="">Nombre:</label>
+            <input type="text" id="nombreGuardar">
+            <button type="button" onclick="guardarNombre()">Guardar Nombre</button>
         </form>
         <p id="resultadoGuardar"></p>
     </section>
 
     <section>
-        <h2>Ejercicio 2. Mostrar el nombre guardado</h2>
-        <form id="formMostrar">
-            <button type="submit">Mostrar nombre</button>
+        <h2>Ejercicio 2: Mostrar los nombres guardados</h2>
+        <form action="">
+            <button type="button" onclick="mostrarNombre()"></button>
         </form>
-        <p id="resultadoMostrar"></p>
+        <ul id="resultadoMostrar"></ul>
     </section>
 
     <section>
@@ -44,6 +43,20 @@
         </form>
         <p id="resultadoEliminar"></p>
     </section>
+
+    <h2>Formulario para registrar una mascota (Objeto)</h2>
+    <form id="formMascota">
+        <label for="mascota">Mascota:</label>
+        <input type="text" id="mascota" name="mascota">
+
+        <label for="raza">Raza:</label>
+        <input type="text" id="raza" name="raza">
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="0">
+
+        <button type="submit">Guardar mascota</button>
+    </form>
 
     <script src="app.js"></script>
 </body>
